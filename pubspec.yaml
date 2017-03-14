@@ -16,6 +16,12 @@ flutter:
   # the Icons class.
   uses-material-design: true
 
+  fonts:
+    - family: Impact
+      fonts:
+        - asset: assets/fonts/Impact.ttf
+  assets:
+   - assets/test_image.jpg
   # To add assets to your application, add an assets section here, in
   # this "flutter" section, as in:
   # assets:

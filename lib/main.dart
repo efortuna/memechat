@@ -6,6 +6,7 @@ import 'dart:math' show Random;
 
 import 'firebase_stubs.dart';
 import 'package:flutter/material.dart';
+import 'type_meme.dart';
 
 void main() {
   runApp(new MyApp());
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.purple,
             accentColor: Colors.orangeAccent[400]
         ),
-        home: new ChatScreen()
+        home: new ChatScreen(),
+        routes: <String, WidgetBuilder> {
+          '/type_meme': (BuildContext context) => new TypeMeme(),
+        },
     );
   }
 }
@@ -105,7 +109,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                   icon: new Icon(Icons.photo),
                   color: themeData.accentColor,
                   onPressed: () {
-                    // Not implemented yet
+                    Navigator.pushNamed(context, '/type_meme'); // TODO: more (also should be type photo when that works).
                   }
               )
           ),
