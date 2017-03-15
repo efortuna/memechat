@@ -17,9 +17,8 @@ class TypeMemeState extends State<TypeMeme> {
           new Stack(children: [
             new Image.asset('assets/test_image.jpg'),
             new Text(_currentMessage.text,
-                textAlign: TextAlign.center,
                 style: const TextStyle(fontFamily: 'Impact'))
-          ]),
+          ], alignment: FractionalOffset.topCenter),
           _buildTextComposer(),
         ]));
   }
@@ -41,7 +40,7 @@ class TypeMemeState extends State<TypeMeme> {
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new IconButton(
             icon: new Icon(Icons.send),
-            onPressed: _isComposing ? null : _insertMemeIntoChat,
+            onPressed: _insertMemeIntoChat,
             color:
                 _isComposing ? themeData.accentColor : themeData.disabledColor,
           ))
