@@ -165,7 +165,7 @@ class ChatMessageListItem extends StatelessWidget {
         sizeFactor: new CurvedAnimation(
             parent: message.animationController, curve: Curves.easeOut),
         axisAlignment: 0.0,
-        child: new ListItem(
+        child: new ListTile(
             dense: true,
             leading: new CircleAvatar(
                 child: new Text(message.sender.name[0]),
