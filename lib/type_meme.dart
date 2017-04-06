@@ -7,7 +7,8 @@ class TypeMeme extends StatefulWidget {
 
 // Represents the states of typing text onto an image to make a meme.
 class TypeMemeState extends State<TypeMeme> {
-  InputValue _currentMessage = InputValue.empty;
+  TextEditingController _textController = new TextEditingController();
+  bool _isComposing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,40 +17,39 @@ class TypeMemeState extends State<TypeMeme> {
         body: new Column(children: <Widget>[
           new Stack(children: [
             new Image.asset('assets/test_image.jpg'),
-            new Text(_currentMessage.text,
+            new Text(_textController.text,
                 style: const TextStyle(fontFamily: 'Impact'))
           ], alignment: FractionalOffset.topCenter),
           _buildTextComposer(),
         ]));
   }
 
-  bool get _isComposing => _currentMessage.text.length > 0;
-
   Widget _buildTextComposer() {
     ThemeData themeData = Theme.of(context);
     return new Row(children: <Widget>[
       new Container(
-        margin: new EdgeInsets.symmetric(horizontal: 4.0),
+          margin: new EdgeInsets.symmetric(horizontal: 4.0),
       ),
       new Flexible(
-          child: new Input(
-              value: _currentMessage,
-              onChanged: _handleMessageChanged,
-              onSubmitted: (InputValue value) => _insertMemeIntoChat())),
+          child: new TextField(
+              controller: _textController,
+              onSubmitted: (String text) => _insertMemeIntoChat(),
+              onChanged: _handleMessageChanged
+          )),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new IconButton(
-            icon: new Icon(Icons.send),
-            onPressed: _insertMemeIntoChat,
-            color:
-                _isComposing ? themeData.accentColor : themeData.disabledColor,
+              icon: new Icon(Icons.send),
+              onPressed: _insertMemeIntoChat,
+              color:
+              _isComposing ? themeData.accentColor : themeData.disabledColor,
           ))
     ]);
   }
 
-  void _handleMessageChanged(InputValue value) {
+  void _handleMessageChanged(String text) {
     setState(() {
-      _currentMessage = value;
+      _isComposing = text.length > 0;
     });
   }
 

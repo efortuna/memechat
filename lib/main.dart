@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "Friendlychat",
-      theme: new ThemeData(
-          primarySwatch: Colors.purple, accentColor: Colors.orangeAccent[400]),
-      home: new ChatScreen(),
-      routes: <String, WidgetBuilder>{
-        '/type_meme': (BuildContext context) => new TypeMeme(),
-      },
+        title: "Friendlychat",
+        theme: new ThemeData(
+            primarySwatch: Colors.purple, accentColor: Colors.orangeAccent[400]),
+        home: new ChatScreen(),
+        routes: <String, WidgetBuilder>{
+          '/type_meme': (BuildContext context) => new TypeMeme(),
+        },
     );
   }
 }
@@ -35,10 +35,11 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   String _name = "Guest${new Random().nextInt(1000)}";
   Color _color =
-      Colors.accents[new Random().nextInt(Colors.accents.length)][700];
+  Colors.accents[new Random().nextInt(Colors.accents.length)][700];
   List<ChatMessage> _messages = <ChatMessage>[];
   DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
-  InputValue _currentMessage = InputValue.empty;
+  TextEditingController _textController = new TextEditingController();
+  bool _isComposing = false;
 
   @override
   void initState() {
@@ -61,27 +62,25 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _handleMessageChanged(InputValue value) {
+  void _handleMessageChanged(String text) {
     setState(() {
-      _currentMessage = value;
+      _isComposing = text.length > 0;
     });
   }
 
-  void _handleMessageAdded(InputValue value) {
-    setState(() {
-      _currentMessage = InputValue.empty;
-    });
+  void _handleMessageAdded(String text) {
+    _textController.clear();
     var message = {
       'sender': {'name': _name, 'color': _color.value},
-      'text': value.text,
+      'text': text,
     };
     _messagesReference.push().set(message);
   }
 
   void _addMessage({String name, Color color, String text}) {
     AnimationController animationController = new AnimationController(
-      duration: new Duration(milliseconds: 700),
-      vsync: this,
+        duration: new Duration(milliseconds: 700),
+        vsync: this,
     );
     ChatUser sender = new ChatUser(name: name, color: color);
     ChatMessage message = new ChatMessage(
@@ -91,8 +90,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
     animationController.forward();
   }
-
-  bool get _isComposing => _currentMessage.text.length > 0;
 
   Widget _buildTextComposer() {
     ThemeData themeData = Theme.of(context);
@@ -107,21 +104,21 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     '/type_meme'); // TODO: more (also should be type photo when that works).
               })),
       new Flexible(
-          child: new Input(
-        value: _currentMessage,
-        hintText: 'Enter message',
-        onSubmitted: _handleMessageAdded,
-        onChanged: _handleMessageChanged,
-      )),
+          child: new TextField(
+              controller: _textController,
+              onSubmitted: _handleMessageAdded,
+              onChanged: _handleMessageChanged,
+              decoration: new InputDecoration.collapsed(hintText: "Enter message")
+          )),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new IconButton(
-            icon: new Icon(Icons.send),
-            onPressed: _isComposing
-                ? () => _handleMessageAdded(_currentMessage)
-                : null,
-            color:
-                _isComposing ? themeData.accentColor : themeData.disabledColor,
+              icon: new Icon(Icons.send),
+              onPressed: _isComposing
+                  ? () => _handleMessageAdded(_textController.text)
+                  : null,
+              color:
+              _isComposing ? themeData.accentColor : themeData.disabledColor,
           ))
     ]);
   }
