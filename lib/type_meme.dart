@@ -2,7 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'platform_adaptive.dart';
 
@@ -14,17 +17,28 @@ class TypeMeme extends StatefulWidget {
 // Represents the states of typing text onto an image to make a meme.
 class TypeMemeState extends State<TypeMeme> {
   TextEditingController _textController = new TextEditingController();
+  File imageFile;
+  Image image = new Image.asset('assets/test_image.jpg');
 
   @override
   Widget build(BuildContext context) {
+    ThemeData themeData = Theme.of(context);
     return new Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           title: new Text("Make yo meme"),
           platform: Theme.of(context).platform,
         ),
         body: new Column(children: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.camera_alt),
+            color: themeData.accentColor,
+            onPressed: () async {
+              imageFile = await ImagePicker.pickImage();
+              image = new Image.file(imageFile);
+            }
+          ),
           new Stack(children: [
-            new Image.asset('assets/test_image.jpg'),
+            image,
             new Text(_textController.text,
                 style: const TextStyle(fontFamily: 'Impact'))
           ], alignment: FractionalOffset.topCenter),
@@ -40,6 +54,7 @@ class TypeMemeState extends State<TypeMeme> {
       new Flexible(
           child: new TextField(
               controller: _textController,
+              onChanged: (String text) => setState(() {}), // rebuild ui to show meme text
               onSubmitted: (String text) => _insertMemeIntoChat())),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),

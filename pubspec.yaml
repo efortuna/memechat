@@ -4,7 +4,8 @@ description: A new flutter project.
 dependencies:
   flutter:
     sdk: flutter
-
+  image_picker:
+    git: git://github.com/flutter/image_picker
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
