@@ -28,21 +28,20 @@ class TypeMemeState extends State<TypeMeme> {
     ThemeData themeData = Theme.of(context);
     return new Row(children: <Widget>[
       new Container(
-          margin: new EdgeInsets.symmetric(horizontal: 4.0),
+        margin: new EdgeInsets.symmetric(horizontal: 4.0),
       ),
       new Flexible(
           child: new TextField(
               controller: _textController,
               onSubmitted: (String text) => _insertMemeIntoChat(),
-              onChanged: _handleMessageChanged
-          )),
+              onChanged: _handleMessageChanged)),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new IconButton(
-              icon: new Icon(Icons.send),
-              onPressed: _insertMemeIntoChat,
-              color:
-              _isComposing ? themeData.accentColor : themeData.disabledColor,
+            icon: new Icon(Icons.send),
+            onPressed: _insertMemeIntoChat,
+            color:
+                _isComposing ? themeData.accentColor : themeData.disabledColor,
           ))
     ]);
   }

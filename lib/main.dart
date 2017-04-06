@@ -16,13 +16,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: "Friendlychat",
-        theme: new ThemeData(
-            primarySwatch: Colors.purple, accentColor: Colors.orangeAccent[400]),
-        home: new ChatScreen(),
-        routes: <String, WidgetBuilder>{
-          '/type_meme': (BuildContext context) => new TypeMeme(),
-        },
+      title: "Friendlychat",
+      theme: new ThemeData(
+          primarySwatch: Colors.purple, accentColor: Colors.orangeAccent[400]),
+      home: new ChatScreen(),
+      routes: <String, WidgetBuilder>{
+        '/type_meme': (BuildContext context) => new TypeMeme(),
+      },
     );
   }
 }
@@ -35,7 +35,7 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   String _name = "Guest${new Random().nextInt(1000)}";
   Color _color =
-  Colors.accents[new Random().nextInt(Colors.accents.length)][700];
+      Colors.accents[new Random().nextInt(Colors.accents.length)][700];
   List<ChatMessage> _messages = <ChatMessage>[];
   DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
   TextEditingController _textController = new TextEditingController();
@@ -79,8 +79,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   void _addMessage({String name, Color color, String text}) {
     AnimationController animationController = new AnimationController(
-        duration: new Duration(milliseconds: 700),
-        vsync: this,
+      duration: new Duration(milliseconds: 700),
+      vsync: this,
     );
     ChatUser sender = new ChatUser(name: name, color: color);
     ChatMessage message = new ChatMessage(
@@ -108,17 +108,17 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               controller: _textController,
               onSubmitted: _handleMessageAdded,
               onChanged: _handleMessageChanged,
-              decoration: new InputDecoration.collapsed(hintText: "Enter message")
-          )),
+              decoration:
+                  new InputDecoration.collapsed(hintText: "Enter message"))),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new IconButton(
-              icon: new Icon(Icons.send),
-              onPressed: _isComposing
-                  ? () => _handleMessageAdded(_textController.text)
-                  : null,
-              color:
-              _isComposing ? themeData.accentColor : themeData.disabledColor,
+            icon: new Icon(Icons.send),
+            onPressed: _isComposing
+                ? () => _handleMessageAdded(_textController.text)
+                : null,
+            color:
+                _isComposing ? themeData.accentColor : themeData.disabledColor,
           ))
     ]);
   }
