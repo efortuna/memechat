@@ -4,9 +4,12 @@
 
 import 'dart:math' show Random;
 
-import 'firebase_stubs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
+import 'firebase_stubs.dart';
 import 'type_meme.dart';
+import 'platform_adaptive.dart';
 
 void main() {
   runApp(new MyApp());
@@ -17,8 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Friendlychat",
-      theme: new ThemeData(
-          primarySwatch: Colors.purple, accentColor: Colors.orangeAccent[400]),
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
+          : kDefaultTheme,
       home: new ChatScreen(),
       routes: <String, WidgetBuilder>{
         '/type_meme': (BuildContext context) => new TypeMeme(),
@@ -112,20 +116,22 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                   new InputDecoration.collapsed(hintText: "Enter message"))),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
-          child: new IconButton(
+          child: new PlatformAdaptiveButton(
             icon: new Icon(Icons.send),
             onPressed: _isComposing
                 ? () => _handleMessageAdded(_textController.text)
                 : null,
-            color:
-                _isComposing ? themeData.accentColor : themeData.disabledColor,
+            child: new Text("Send"),
           ))
     ]);
   }
 
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(title: new Text("Chatting as $_name")),
+        appBar: new PlatformAdaptiveAppBar(
+          title: new Text("Chatting as $_name"),
+          platform: Theme.of(context).platform,
+        ),
         body: new Column(children: <Widget>[
           new Flexible(
               child: new ListView(
