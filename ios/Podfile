@@ -6,5 +6,8 @@ target 'Runner' do
   # use_frameworks!
 
   # Pods for Runner
+  pod 'Firebase'
+  pod 'FirebaseDatabase'
+  pod 'FirebaseStorage'
 
 end
