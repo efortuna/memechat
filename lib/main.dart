@@ -4,9 +4,12 @@
 
 import 'dart:math' show Random;
 
-import 'firebase_stubs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
+import 'firebase_stubs.dart';
 import 'type_meme.dart';
+import 'platform_adaptive.dart';
 
 void main() {
   runApp(new MyApp());
@@ -17,8 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Friendlychat",
-      theme: new ThemeData(
-          primarySwatch: Colors.purple, accentColor: Colors.orangeAccent[400]),
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
+          : kDefaultTheme,
       home: new ChatScreen(),
       routes: <String, WidgetBuilder>{
         '/type_meme': (BuildContext context) => new TypeMeme(),
@@ -38,7 +42,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       Colors.accents[new Random().nextInt(Colors.accents.length)][700];
   List<ChatMessage> _messages = <ChatMessage>[];
   DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
-  InputValue _currentMessage = InputValue.empty;
+  TextEditingController _textController = new TextEditingController();
+  bool _isComposing = false;
 
   @override
   void initState() {
@@ -61,19 +66,17 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  void _handleMessageChanged(InputValue value) {
+  void _handleMessageChanged(String text) {
     setState(() {
-      _currentMessage = value;
+      _isComposing = text.length > 0;
     });
   }
 
-  void _handleMessageAdded(InputValue value) {
-    setState(() {
-      _currentMessage = InputValue.empty;
-    });
+  void _handleMessageAdded(String text) {
+    _textController.clear();
     var message = {
       'sender': {'name': _name, 'color': _color.value},
-      'text': value.text,
+      'text': text,
     };
     _messagesReference.push().set(message);
   }
@@ -92,8 +95,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     animationController.forward();
   }
 
-  bool get _isComposing => _currentMessage.text.length > 0;
-
   Widget _buildTextComposer() {
     ThemeData themeData = Theme.of(context);
     return new Row(children: <Widget>[
@@ -107,28 +108,30 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     '/type_meme'); // TODO: more (also should be type photo when that works).
               })),
       new Flexible(
-          child: new Input(
-        value: _currentMessage,
-        hintText: 'Enter message',
-        onSubmitted: _handleMessageAdded,
-        onChanged: _handleMessageChanged,
-      )),
+          child: new TextField(
+              controller: _textController,
+              onSubmitted: _handleMessageAdded,
+              onChanged: _handleMessageChanged,
+              decoration:
+                  new InputDecoration.collapsed(hintText: "Enter message"))),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
-          child: new IconButton(
+          child: new PlatformAdaptiveButton(
             icon: new Icon(Icons.send),
             onPressed: _isComposing
-                ? () => _handleMessageAdded(_currentMessage)
+                ? () => _handleMessageAdded(_textController.text)
                 : null,
-            color:
-                _isComposing ? themeData.accentColor : themeData.disabledColor,
+            child: new Text("Send"),
           ))
     ]);
   }
 
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(title: new Text("Chatting as $_name")),
+        appBar: new PlatformAdaptiveAppBar(
+          title: new Text("Chatting as $_name"),
+          platform: Theme.of(context).platform,
+        ),
         body: new Column(children: <Widget>[
           new Flexible(
               child: new ListView(
