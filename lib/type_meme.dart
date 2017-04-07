@@ -40,6 +40,7 @@ class TypeMemeState extends State<TypeMeme> {
       new Flexible(
           child: new TextField(
               controller: _textController,
+              onChanged: (String text) => setState(() {}), // rebuild ui to show meme text
               onSubmitted: (String text) => _insertMemeIntoChat())),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
