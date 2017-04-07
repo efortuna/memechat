@@ -65,5 +65,4 @@ class DataSnapshot {
   dynamic val() => _val;
 }
 
-class FirebaseMessaging {
-}
+class FirebaseMessaging {}
