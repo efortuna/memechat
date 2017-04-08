@@ -6,8 +6,9 @@ import 'dart:math' show Random;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-import 'firebase_stubs.dart';
+//import 'firebase_stubs.dart';
 import 'type_meme.dart';
 import 'platform_adaptive.dart';
 

@@ -4,6 +4,8 @@ description: A new flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  firebase_database:
+    git: git://github.com/flutter/firebase_database
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

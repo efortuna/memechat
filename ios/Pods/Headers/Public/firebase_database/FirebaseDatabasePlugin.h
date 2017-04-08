@@ -1,0 +1,1 @@
+../../../../../../../.pub-cache/git/firebase_database-05300967f16a8ff5787f4009775d8c3fb0946f34/ios/Classes/FirebaseDatabasePlugin.h
