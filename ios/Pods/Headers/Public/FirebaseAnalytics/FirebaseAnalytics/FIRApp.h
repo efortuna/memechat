@@ -1,1 +1,1 @@
-../../../../FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRApp.h
+../../../../FirebaseAnalytics/Frameworks/frameworks/FirebaseAnalytics.framework/Headers/FIRApp.h

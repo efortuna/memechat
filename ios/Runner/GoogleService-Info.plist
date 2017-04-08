@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>930621591853-f0h905j72hild2e5clg76qdkva276atc.apps.googleusercontent.com</string>
+	<string>462578386393-kisbgopib3t6plf4dgv3s0n4ur3svjmo.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.930621591853-f0h905j72hild2e5clg76qdkva276atc</string>
+	<string>com.googleusercontent.apps.462578386393-kisbgopib3t6plf4dgv3s0n4ur3svjmo</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD7B3jey_zICDr_WLifVyz89BgBClHBu4s</string>
+	<string>AIzaSyDIEPKjrtCLpfd6G7AcwmdTOO03JE7Sncg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>930621591853</string>
+	<string>462578386393</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.yourcompany.memechat</string>
+	<string>com.google.firebase.codelab.FriendlyChatFlutter</string>
 	<key>PROJECT_ID</key>
-	<string>memechat-emshack-efortuna</string>
+	<string>friendlychat-5824f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>memechat-emshack-efortuna.appspot.com</string>
+	<string>friendlychat-5824f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:930621591853:ios:dd2d837726498b85</string>
+	<string>1:462578386393:ios:e7d6f85291bba4a6</string>
 	<key>DATABASE_URL</key>
-	<string>https://memechat-emshack-efortuna.firebaseio.com</string>
+	<string>https://friendlychat-5824f.firebaseio.com</string>
 </dict>
 </plist>
