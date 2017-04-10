@@ -2,11 +2,10 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'dart:math' show Random;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 //import 'firebase_stubs.dart';
 import 'type_meme.dart';
@@ -20,14 +19,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "Friendlychat",
-      theme: defaultTargetPlatform == TargetPlatform.iOS
-          ? kIOSTheme
-          : kDefaultTheme,
-      home: new ChatScreen(),
-      routes: <String, WidgetBuilder>{
-        '/type_meme': (BuildContext context) => new TypeMeme(),
-      },
+        title: "Friendlychat",
+        theme: defaultTargetPlatform == TargetPlatform.iOS
+            ? kIOSTheme
+            : kDefaultTheme,
+        home: new ChatScreen(),
+        routes: <String, WidgetBuilder>{
+          '/type_meme': (BuildContext context) => new TypeMeme(),
+        },
     );
   }
 }
@@ -38,24 +37,31 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
-  String _name = "Guest${new Random().nextInt(1000)}";
-  Color _color =
-      Colors.accents[new Random().nextInt(Colors.accents.length)][700];
   List<ChatMessage> _messages = <ChatMessage>[];
   DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
   TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
+  GoogleSignIn _googleSignIn;
 
   @override
   void initState() {
     super.initState();
+    GoogleSignIn.initialize(scopes: <String>[]);
+    GoogleSignIn.instance.then((GoogleSignIn instance) {
+      setState(() {
+        _googleSignIn = instance;
+        _googleSignIn.signInSilently();
+      });
+    });
     FirebaseAuth.instance.signInAnonymously().then((user) {
       _messagesReference.onChildAdded.listen((Event event) {
         var val = event.snapshot.val();
         _addMessage(
             name: val['sender']['name'],
-            color: new Color(val['sender']['color']),
-            text: val['text']);
+            senderImageUrl: val['sender']['imageUrl'],
+            text: val['text'],
+            imageUrl: val['imageUrl']
+        );
       });
     });
   }
@@ -75,21 +81,23 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   void _handleMessageAdded(String text) {
     _textController.clear();
-    var message = {
-      'sender': {'name': _name, 'color': _color.value},
-      'text': text,
-    };
-    _messagesReference.push().set(message);
+    _googleSignIn.signIn().then((GoogleSignInAccount user) {
+      var message = {
+        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl },
+        'text': text,
+      };
+      _messagesReference.push().set(message);
+    });
   }
 
-  void _addMessage({String name, Color color, String text}) {
+  void _addMessage({String name, String text, String imageUrl, String senderImageUrl}) {
     AnimationController animationController = new AnimationController(
-      duration: new Duration(milliseconds: 700),
-      vsync: this,
+        duration: new Duration(milliseconds: 700),
+        vsync: this,
     );
-    ChatUser sender = new ChatUser(name: name, color: color);
+    ChatUser sender = new ChatUser(name: name, imageUrl: senderImageUrl);
     ChatMessage message = new ChatMessage(
-        sender: sender, text: text, animationController: animationController);
+        sender: sender, text: text, imageUrl: imageUrl, animationController: animationController);
     setState(() {
       _messages.insert(0, message);
     });
@@ -114,15 +122,15 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               onSubmitted: _handleMessageAdded,
               onChanged: _handleMessageChanged,
               decoration:
-                  new InputDecoration.collapsed(hintText: "Enter message"))),
+              new InputDecoration.collapsed(hintText: "Enter message"))),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new PlatformAdaptiveButton(
-            icon: new Icon(Icons.send),
-            onPressed: _isComposing
-                ? () => _handleMessageAdded(_textController.text)
-                : null,
-            child: new Text("Send"),
+              icon: new Icon(Icons.send),
+              onPressed: _isComposing
+                  ? () => _handleMessageAdded(_textController.text)
+                  : null,
+              child: new Text("Send"),
           ))
     ]);
   }
@@ -130,8 +138,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new PlatformAdaptiveAppBar(
-          title: new Text("Chatting as $_name"),
-          platform: Theme.of(context).platform,
+            title: new Text("Memechat"),
+            platform: Theme.of(context).platform,
         ),
         body: new Column(children: <Widget>[
           new Flexible(
@@ -147,15 +155,16 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 }
 
 class ChatUser {
-  ChatUser({this.name, this.color});
+  ChatUser({this.name, this.imageUrl});
   final String name;
-  final Color color;
+  final String imageUrl;
 }
 
 class ChatMessage {
-  ChatMessage({this.sender, this.text, this.animationController});
+  ChatMessage({this.sender, this.text, this.imageUrl, this.animationController});
   final ChatUser sender;
   final String text;
+  final String imageUrl;
   final AnimationController animationController;
 }
 
@@ -169,12 +178,41 @@ class ChatMessageListItem extends StatelessWidget {
         sizeFactor: new CurvedAnimation(
             parent: message.animationController, curve: Curves.easeOut),
         axisAlignment: 0.0,
-        child: new ListTile(
-            dense: true,
-            leading: new CircleAvatar(
-                child: new Text(message.sender.name[0]),
-                backgroundColor: message.sender.color),
-            title: new Text(message.sender.name),
-            subtitle: new Text(message.text)));
+        child: new Container(
+            margin: const EdgeInsets.symmetric(vertical: 10.0),
+            child: new Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Container(
+                      margin: const EdgeInsets.only(right: 16.0),
+                      child: new GoogleUserCircleAvatar(message.sender.imageUrl),
+                  ),
+                  new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Text(message.sender.name, style: Theme.of(context).textTheme.subhead),
+                        new Container(
+                            margin: const EdgeInsets.only(top: 5.0),
+                            child: new ChatMessageContent(message)
+                        ),
+                      ],
+                  ),
+                ],
+            ),
+        )
+    );
+  }
+}
+
+class ChatMessageContent extends StatelessWidget {
+  ChatMessageContent(this.message);
+
+  final ChatMessage message;
+
+  Widget build(BuildContext context) {
+    if (message.imageUrl != null)
+      return new Image.network(message.imageUrl, width: 250.0);
+    else
+      return new Text(message.text);
   }
 }

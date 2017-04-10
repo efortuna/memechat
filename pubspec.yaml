@@ -4,6 +4,8 @@ description: A new flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  google_sign_in:
+    git: git://github.com/flutter/google_sign_in
   firebase_database:
     git: git://github.com/flutter/firebase_database
 
