@@ -1,0 +1,1 @@
+../../../../../../.pub-cache/git/google_sign_in-9896e4b449f4fb01e97c4c1380d6f9503041030e/ios/Classes/GoogleSignInPlugin.h

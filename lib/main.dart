@@ -19,14 +19,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: "Friendlychat",
-        theme: defaultTargetPlatform == TargetPlatform.iOS
-            ? kIOSTheme
-            : kDefaultTheme,
-        home: new ChatScreen(),
-        routes: <String, WidgetBuilder>{
-          '/type_meme': (BuildContext context) => new TypeMeme(),
-        },
+      title: "Friendlychat",
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
+          : kDefaultTheme,
+      home: new ChatScreen(),
+      routes: <String, WidgetBuilder>{
+        '/type_meme': (BuildContext context) => new TypeMeme(),
+      },
     );
   }
 }
@@ -60,8 +60,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             name: val['sender']['name'],
             senderImageUrl: val['sender']['imageUrl'],
             text: val['text'],
-            imageUrl: val['imageUrl']
-        );
+            imageUrl: val['imageUrl']);
       });
     });
   }
@@ -83,21 +82,25 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     _textController.clear();
     _googleSignIn.signIn().then((GoogleSignInAccount user) {
       var message = {
-        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl },
+        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
         'text': text,
       };
       _messagesReference.push().set(message);
     });
   }
 
-  void _addMessage({String name, String text, String imageUrl, String senderImageUrl}) {
+  void _addMessage(
+      {String name, String text, String imageUrl, String senderImageUrl}) {
     AnimationController animationController = new AnimationController(
-        duration: new Duration(milliseconds: 700),
-        vsync: this,
+      duration: new Duration(milliseconds: 700),
+      vsync: this,
     );
     ChatUser sender = new ChatUser(name: name, imageUrl: senderImageUrl);
     ChatMessage message = new ChatMessage(
-        sender: sender, text: text, imageUrl: imageUrl, animationController: animationController);
+        sender: sender,
+        text: text,
+        imageUrl: imageUrl,
+        animationController: animationController);
     setState(() {
       _messages.insert(0, message);
     });
@@ -122,15 +125,15 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               onSubmitted: _handleMessageAdded,
               onChanged: _handleMessageChanged,
               decoration:
-              new InputDecoration.collapsed(hintText: "Enter message"))),
+                  new InputDecoration.collapsed(hintText: "Enter message"))),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new PlatformAdaptiveButton(
-              icon: new Icon(Icons.send),
-              onPressed: _isComposing
-                  ? () => _handleMessageAdded(_textController.text)
-                  : null,
-              child: new Text("Send"),
+            icon: new Icon(Icons.send),
+            onPressed: _isComposing
+                ? () => _handleMessageAdded(_textController.text)
+                : null,
+            child: new Text("Send"),
           ))
     ]);
   }
@@ -138,8 +141,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new PlatformAdaptiveAppBar(
-            title: new Text("Memechat"),
-            platform: Theme.of(context).platform,
+          title: new Text("Memechat"),
+          platform: Theme.of(context).platform,
         ),
         body: new Column(children: <Widget>[
           new Flexible(
@@ -161,7 +164,8 @@ class ChatUser {
 }
 
 class ChatMessage {
-  ChatMessage({this.sender, this.text, this.imageUrl, this.animationController});
+  ChatMessage(
+      {this.sender, this.text, this.imageUrl, this.animationController});
   final ChatUser sender;
   final String text;
   final String imageUrl;
@@ -179,28 +183,27 @@ class ChatMessageListItem extends StatelessWidget {
             parent: message.animationController, curve: Curves.easeOut),
         axisAlignment: 0.0,
         child: new Container(
-            margin: const EdgeInsets.symmetric(vertical: 10.0),
-            child: new Row(
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
+          child: new Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Container(
+                margin: const EdgeInsets.only(right: 16.0),
+                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
+              ),
+              new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  new Text(message.sender.name,
+                      style: Theme.of(context).textTheme.subhead),
                   new Container(
-                      margin: const EdgeInsets.only(right: 16.0),
-                      child: new GoogleUserCircleAvatar(message.sender.imageUrl),
-                  ),
-                  new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        new Text(message.sender.name, style: Theme.of(context).textTheme.subhead),
-                        new Container(
-                            margin: const EdgeInsets.only(top: 5.0),
-                            child: new ChatMessageContent(message)
-                        ),
-                      ],
-                  ),
+                      margin: const EdgeInsets.only(top: 5.0),
+                      child: new ChatMessageContent(message)),
                 ],
-            ),
-        )
-    );
+              ),
+            ],
+          ),
+        ));
   }
 }
 

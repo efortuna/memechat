@@ -1,0 +1,32 @@
+{
+  "name": "google_sign_in",
+  "version": "0.0.1",
+  "summary": "Flutter Google Sign-In Plugin",
+  "description": "Enables Google Sign-In in Flutter apps.",
+  "homepage": "http://flutter.io",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Flutter Team": "flutter-dev@googlegroups.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "public_header_files": "Classes/**/*.h",
+  "dependencies": {
+    "Flutter": [
+
+    ],
+    "Google/SignIn": [
+
+    ]
+  },
+  "platforms": {
+    "osx": null,
+    "ios": null,
+    "tvos": null,
+    "watchos": null
+  }
+}
