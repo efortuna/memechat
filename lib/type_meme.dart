@@ -16,9 +16,10 @@ import 'platform_adaptive.dart';
 
 class TypeMeme extends StatefulWidget {
   final GoogleSignIn _googleSignIn;
+  final DatabaseReference _messagesReference;
   Uri downloadUrl;
 
-  TypeMeme(this._googleSignIn, this.downloadUrl);
+  TypeMeme(this._googleSignIn, this._messagesReference, this.downloadUrl);
 
   @override
   State<StatefulWidget> createState() => new TypeMemeState(downloadUrl);
@@ -26,7 +27,6 @@ class TypeMeme extends StatefulWidget {
 
 // Represents the states of typing text onto an image to make a meme.
 class TypeMemeState extends State<TypeMeme> {
-  DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
   TextEditingController _textController = new TextEditingController();
   Uri downloadUrl;
   Image image;
@@ -93,8 +93,9 @@ class TypeMemeState extends State<TypeMeme> {
     var message = {
       'sender': {'name': account.displayName, 'imageUrl': account.photoUrl},
       'imageUrl': downloadUrl.toString(),
+      'textOverlay': _textController.text
     };
-    _messagesReference.push().set(message);
+    config._messagesReference.push().set(message);
     Navigator.of(context).pop();
   }
 }

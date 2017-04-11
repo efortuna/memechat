@@ -56,7 +56,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             name: val['sender']['name'],
             senderImageUrl: val['sender']['imageUrl'],
             text: val['text'],
-            imageUrl: val['imageUrl']);
+            imageUrl: val['imageUrl'],
+            textOverlay: val['textOverlay']
+        );
       });
     });
   }
@@ -86,7 +88,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   void _addMessage(
-      {String name, String text, String imageUrl, String senderImageUrl}) {
+      {String name, String text, String imageUrl, String textOverlay, String senderImageUrl}) {
     AnimationController animationController = new AnimationController(
       duration: new Duration(milliseconds: 700),
       vsync: this,
@@ -96,6 +98,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         sender: sender,
         text: text,
         imageUrl: imageUrl,
+        textOverlay: textOverlay,
         animationController: animationController);
     setState(() {
       _messages.insert(0, message);
@@ -115,7 +118,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 Uri downloadUrl = await pickAndUploadImage();
                 Navigator.of(context).push(new MaterialPageRoute<bool>(
                     builder: (BuildContext context) {
-                  return new TypeMeme(_googleSignIn, downloadUrl);
+                  return new TypeMeme(_googleSignIn, _messagesReference, downloadUrl);
                 }));
               })),
       new Flexible(
@@ -164,10 +167,11 @@ class ChatUser {
 
 class ChatMessage {
   ChatMessage(
-      {this.sender, this.text, this.imageUrl, this.animationController});
+      {this.sender, this.text, this.imageUrl, this.textOverlay, this.animationController});
   final ChatUser sender;
   final String text;
   final String imageUrl;
+  final String textOverlay;
   final AnimationController animationController;
 }
 
@@ -212,9 +216,20 @@ class ChatMessageContent extends StatelessWidget {
   final ChatMessage message;
 
   Widget build(BuildContext context) {
-    if (message.imageUrl != null)
-      return new Image.network(message.imageUrl, width: 200.0);
-    else
+    if (message.imageUrl != null) {
+      Image image = new Image.network(message.imageUrl, width: 200.0);
+      if (message.textOverlay == null) {
+        return image;
+      } else {
+        return new Stack(
+          children: [
+            image,
+            new Text(message.textOverlay,
+                style: const TextStyle(fontFamily: 'Impact'))
+          ], alignment: FractionalOffset.topCenter
+        );
+      }
+    } else
       return new Text(message.text);
   }
 }
