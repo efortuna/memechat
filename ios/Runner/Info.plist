@@ -18,6 +18,18 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+    <array>
+            <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                            <string>com.yourcompany.memechat</string>
+                            <string>com.googleusercontent.apps.930621591853-f0h905j72hild2e5clg76qdkva276atc</string>
+                    </array>
+            </dict>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
