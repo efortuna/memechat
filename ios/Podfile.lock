@@ -5,8 +5,14 @@ PODS:
   - Firebase/Database (3.15.0):
     - Firebase/Core
     - FirebaseDatabase (= 3.1.2)
+  - Firebase/Storage (3.15.0):
+    - Firebase/Core
+    - FirebaseStorage (= 1.1.0)
   - firebase_database (0.0.1):
     - Firebase/Database
+    - Flutter
+  - firebase_storage (0.0.1):
+    - Firebase/Storage
     - Flutter
   - FirebaseAnalytics (3.7.0):
     - FirebaseCore (~> 3.5)
@@ -17,6 +23,9 @@ PODS:
   - FirebaseDatabase (3.1.2):
     - FirebaseAnalytics (~> 3.7)
   - FirebaseInstanceID (1.0.9)
+  - FirebaseStorage (1.1.0):
+    - FirebaseAnalytics (~> 3.7)
+    - GTMSessionFetcher/Core (~> 1.1)
   - Flutter (1.0.0)
   - Google/Core (3.0.3):
     - FirebaseAnalytics (~> 3.2)
@@ -48,27 +57,37 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
   - GTMSessionFetcher/Full (1.1.9):
     - GTMSessionFetcher/Core (= 1.1.9)
+  - image_picker (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - firebase_database (from `/Users/emshack/.pub-cache/git/firebase_database-05300967f16a8ff5787f4009775d8c3fb0946f34/ios`)
+  - firebase_storage (from `/Users/emshack/.pub-cache/git/firebase_storage-2f2f90960cf504106c0d7f5be20b980583cbb2c2/ios`)
   - Flutter (from `/Users/emshack/flutter/bin/cache/artifacts/engine/ios`)
   - google_sign_in (from `/Users/emshack/.pub-cache/git/google_sign_in-9896e4b449f4fb01e97c4c1380d6f9503041030e/ios`)
+  - image_picker (from `/Users/emshack/.pub-cache/git/image_picker-530a921ec44c3c2a2a7a730040c0ed7c28c552ca/ios`)
 
 EXTERNAL SOURCES:
   firebase_database:
     :path: /Users/emshack/.pub-cache/git/firebase_database-05300967f16a8ff5787f4009775d8c3fb0946f34/ios
+  firebase_storage:
+    :path: /Users/emshack/.pub-cache/git/firebase_storage-2f2f90960cf504106c0d7f5be20b980583cbb2c2/ios
   Flutter:
     :path: /Users/emshack/flutter/bin/cache/artifacts/engine/ios
   google_sign_in:
     :path: /Users/emshack/.pub-cache/git/google_sign_in-9896e4b449f4fb01e97c4c1380d6f9503041030e/ios
+  image_picker:
+    :path: /Users/emshack/.pub-cache/git/image_picker-530a921ec44c3c2a2a7a730040c0ed7c28c552ca/ios
 
 SPEC CHECKSUMS:
   Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   firebase_database: 7428a61fa8f2ed48abbf5a016502fb01abbe1ba2
+  firebase_storage: 1bd7ccba3a436618df3e5bd18604c2b74aae6cb0
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseCore: a024587e43778508700af8c6b1209f7c4516ba02
   FirebaseDatabase: 05c96d7b43a7368dc91c07791adb49683e1738d1
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   Flutter: d674e78c937094a75ac71dd77e921e840bea3dbf
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   google_sign_in: 47d0b9a746422b06b10f125ba12089ff54ccbf9b
@@ -76,6 +95,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
+  image_picker: ed7550c4faa9c0360d4c84d8f3595b37b886ae90
 
 PODFILE CHECKSUM: 09d6f0c9b7ad87bc79cc8d4d2f2f35a8ba819e4c
 

@@ -19,15 +19,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "Friendlychat",
-      theme: defaultTargetPlatform == TargetPlatform.iOS
-          ? kIOSTheme
-          : kDefaultTheme,
-      home: new ChatScreen(),
-      routes: <String, WidgetBuilder>{
-        '/type_meme': (BuildContext context) => new TypeMeme(),
-      },
-    );
+        title: "Friendlychat",
+        theme: defaultTargetPlatform == TargetPlatform.iOS
+            ? kIOSTheme
+            : kDefaultTheme,
+        home: new ChatScreen());
   }
 }
 
@@ -115,9 +111,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           child: new IconButton(
               icon: new Icon(Icons.photo),
               color: themeData.accentColor,
-              onPressed: () {
-                Navigator.pushNamed(context,
-                    '/type_meme'); // TODO: more (also should be type photo when that works).
+              onPressed: () async {
+                Uri downloadUrl = await pickAndUploadImage();
+                Navigator.of(context).push(new MaterialPageRoute<bool>(
+                    builder: (BuildContext context) {
+                  return new TypeMeme(_googleSignIn, downloadUrl);
+                }));
               })),
       new Flexible(
           child: new TextField(
@@ -214,7 +213,7 @@ class ChatMessageContent extends StatelessWidget {
 
   Widget build(BuildContext context) {
     if (message.imageUrl != null)
-      return new Image.network(message.imageUrl, width: 250.0);
+      return new Image.network(message.imageUrl, width: 200.0);
     else
       return new Text(message.text);
   }

@@ -4,10 +4,14 @@ description: A new flutter project.
 dependencies:
   flutter:
     sdk: flutter
+  image_picker:
+    git: git://github.com/flutter/image_picker
   google_sign_in:
     git: git://github.com/flutter/google_sign_in
   firebase_database:
     git: git://github.com/flutter/firebase_database
+  firebase_storage:
+    git: git://github.com/flutter/firebase_storage
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
@@ -24,8 +28,6 @@ flutter:
     - family: Impact
       fonts:
         - asset: assets/fonts/Impact.ttf
-  assets:
-   - assets/test_image.jpg
   # To add assets to your application, add an assets section here, in
   # this "flutter" section, as in:
   # assets:
