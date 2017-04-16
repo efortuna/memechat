@@ -10,38 +10,38 @@ import 'platform_adaptive.dart';
 
 class TypeMemeRoute extends MaterialPageRoute<String> {
   TypeMemeRoute(File imageFile) : super(
+    fullscreenDialog: true,
     builder: (BuildContext context) {
-      return new TypeMeme(imageFile);
+      return new TypeMemeDialog(imageFile: imageFile);
     }
   );
 }
 
-class TypeMeme extends StatefulWidget {
+class TypeMemeDialog extends StatefulWidget {
   final File imageFile;
 
-  TypeMeme(this.imageFile);
+  TypeMemeDialog({ this.imageFile });
 
   @override
-  State<StatefulWidget> createState() => new TypeMemeState();
+  State<StatefulWidget> createState() => new TypeMemeDialogState();
 }
 
 // Represents the states of typing text onto an image to make a meme.
-class TypeMemeState extends State<TypeMeme> {
+class TypeMemeDialogState extends State<TypeMemeDialog> {
   String _text = '';
-
-  void _handleTextChanged(String text) {
-    setState(() {
-      _text = text;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return new Scaffold(
       appBar: new PlatformAdaptiveAppBar(
-        title: new Text("Make yo meme"),
+        title: new Text("New meme"),
         platform: Theme.of(context).platform,
+        actions: <Widget> [
+          new FlatButton(
+            child: new Text('SEND'),
+            onPressed: () => Navigator.pop(context, _text),
+          ),
+        ],
       ),
       body: new Column(
         children: <Widget>[
@@ -53,32 +53,18 @@ class TypeMemeState extends State<TypeMeme> {
             alignment: FractionalOffset.topCenter,
           ),
           new Container(
-            margin: new EdgeInsets.only(left: 8.0),
-            child: new Row(
-              children: <Widget>[
-                new Flexible(
-                  child: new TextField(
-                    onChanged: _handleTextChanged,
-                    onSubmitted: (_) => _finish(),
-                  ),
-                ),
-                new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  child: new PlatformAdaptiveButton(
-                    icon: new Icon(Icons.send),
-                    onPressed: _finish,
-                    child: new Text("Send"),
-                  ),
-                ),
-              ],
+            margin: new EdgeInsets.symmetric(horizontal: 16.0),
+            child: new TextField(
+              decoration: const InputDecoration(hintText: 'Make yo meme'),
+              onChanged: (String text) {
+                setState(() {
+                  _text = text;
+                });
+              },
             ),
           ),
         ],
       ),
     );
-  }
-
-  void _finish() {
-    Navigator.pop(context, _text);
   }
 }
