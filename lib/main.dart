@@ -2,12 +2,17 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'dart:async';
+import 'dart:io';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
-//import 'firebase_stubs.dart';
 import 'type_meme.dart';
 import 'platform_adaptive.dart';
 
@@ -19,11 +24,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        title: "Friendlychat",
-        theme: defaultTargetPlatform == TargetPlatform.iOS
-            ? kIOSTheme
-            : kDefaultTheme,
-        home: new ChatScreen());
+      title: "Friendlychat",
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
+          : kDefaultTheme,
+      home: new ChatScreen(),
+    );
   }
 }
 
@@ -53,11 +59,11 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       _messagesReference.onChildAdded.listen((Event event) {
         var val = event.snapshot.val();
         _addMessage(
-            name: val['sender']['name'],
-            senderImageUrl: val['sender']['imageUrl'],
-            text: val['text'],
-            imageUrl: val['imageUrl'],
-            textOverlay: val['textOverlay']
+          name: val['sender']['name'],
+          senderImageUrl: val['sender']['imageUrl'],
+          text: val['text'],
+          imageUrl: val['imageUrl'],
+          textOverlay: val['textOverlay']
         );
       });
     });
@@ -106,28 +112,43 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     animationController.forward();
   }
 
+  Future<Null> _handlePhotoButtonPressed() async {
+    GoogleSignInAccount account = await _googleSignIn.signIn();
+    File imageFile = await ImagePicker.pickImage();
+    int random = new Random().nextInt(10000);
+    StorageReference ref = FirebaseStorage.instance.ref().child("image_$random.jpg");
+    StorageUploadTask uploadTask = ref.put(imageFile);
+    String overlay = await Navigator.push(context, new TypeMemeRoute(imageFile));
+    if (overlay == null)
+      return;
+    Uri downloadUrl = (await uploadTask.future).downloadUrl;
+    var message = {
+      'sender': { 'name': account.displayName, 'imageUrl': account.photoUrl },
+      'imageUrl': downloadUrl.toString(),
+      'textOverlay': overlay,
+    };
+    _messagesReference.push().set(message);
+  }
+
   Widget _buildTextComposer() {
     ThemeData themeData = Theme.of(context);
     return new Row(children: <Widget>[
       new Container(
-          margin: new EdgeInsets.symmetric(horizontal: 4.0),
-          child: new IconButton(
-              icon: new Icon(Icons.photo),
-              color: themeData.accentColor,
-              onPressed: () async {
-                Uri downloadUrl = await pickAndUploadImage();
-                Navigator.of(context).push(new MaterialPageRoute<bool>(
-                    builder: (BuildContext context) {
-                  return new TypeMeme(_googleSignIn, _messagesReference, downloadUrl);
-                }));
-              })),
+        margin: new EdgeInsets.symmetric(horizontal: 4.0),
+        child: new IconButton(
+          icon: new Icon(Icons.photo),
+          color: themeData.accentColor,
+          onPressed: _handlePhotoButtonPressed,
+        ),
+      ),
       new Flexible(
-          child: new TextField(
-              controller: _textController,
-              onSubmitted: _handleMessageAdded,
-              onChanged: _handleMessageChanged,
-              decoration:
-                  new InputDecoration.collapsed(hintText: "Enter message"))),
+        child: new TextField(
+          controller: _textController,
+          onSubmitted: _handleMessageAdded,
+          onChanged: _handleMessageChanged,
+          decoration: new InputDecoration.collapsed(hintText: "Enter message"),
+        ),
+      ),
       new Container(
           margin: new EdgeInsets.symmetric(horizontal: 4.0),
           child: new PlatformAdaptiveButton(
@@ -136,8 +157,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 ? () => _handleMessageAdded(_textController.text)
                 : null,
             child: new Text("Send"),
-          ))
-    ]);
+          )
+        ),
+      ],
+    );
   }
 
   Widget build(BuildContext context) {
@@ -222,11 +245,14 @@ class ChatMessageContent extends StatelessWidget {
         return image;
       } else {
         return new Stack(
+          alignment: FractionalOffset.topCenter,
           children: [
             image,
-            new Text(message.textOverlay,
-                style: const TextStyle(fontFamily: 'Impact'))
-          ], alignment: FractionalOffset.topCenter
+            new Text(
+              message.textOverlay,
+              style: const TextStyle(fontFamily: 'Impact'),
+            ),
+          ],
         );
       }
     } else

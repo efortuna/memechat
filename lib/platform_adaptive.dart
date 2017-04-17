@@ -21,6 +21,7 @@ class PlatformAdaptiveAppBar extends AppBar {
   PlatformAdaptiveAppBar({
     Key key,
     TargetPlatform platform,
+    List<Widget> actions,
     Widget title,
     Widget body,
     // TODO(jackson): other properties?
@@ -29,6 +30,7 @@ class PlatformAdaptiveAppBar extends AppBar {
           key: key,
           elevation: platform == TargetPlatform.iOS ? 0 : 4,
           title: title,
+          actions: actions,
         );
 }
 

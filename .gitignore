@@ -6,5 +6,7 @@
 build/
 ios/.generated/
 ios/Pods/
+ios/Podfile.lock
+.flutter-plugins
 packages
 pubspec.lock
