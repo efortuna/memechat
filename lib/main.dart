@@ -119,6 +119,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     StorageReference ref = FirebaseStorage.instance.ref().child("image_$random.jpg");
     StorageUploadTask uploadTask = ref.put(imageFile);
     String overlay = await Navigator.push(context, new TypeMemeRoute(imageFile));
+    if (overlay == null)
+      return;
     Uri downloadUrl = (await uploadTask.future).downloadUrl;
     var message = {
       'sender': { 'name': account.displayName, 'imageUrl': account.photoUrl },
