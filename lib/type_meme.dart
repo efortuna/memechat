@@ -9,18 +9,18 @@ import 'package:flutter/material.dart';
 import 'platform_adaptive.dart';
 
 class TypeMemeRoute extends MaterialPageRoute<String> {
-  TypeMemeRoute(File imageFile) : super(
-    fullscreenDialog: true,
-    builder: (BuildContext context) {
-      return new TypeMemeDialog(imageFile: imageFile);
-    }
-  );
+  TypeMemeRoute(File imageFile)
+      : super(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return new TypeMemeDialog(imageFile: imageFile);
+            });
 }
 
 class TypeMemeDialog extends StatefulWidget {
   final File imageFile;
 
-  TypeMemeDialog({ this.imageFile });
+  TypeMemeDialog({this.imageFile});
 
   @override
   State<StatefulWidget> createState() => new TypeMemeDialogState();
@@ -36,7 +36,7 @@ class TypeMemeDialogState extends State<TypeMemeDialog> {
       appBar: new PlatformAdaptiveAppBar(
         title: new Text("New meme"),
         platform: Theme.of(context).platform,
-        actions: <Widget> [
+        actions: <Widget>[
           new FlatButton(
             child: new Text('SEND'),
             onPressed: () => Navigator.pop(context, _text),
