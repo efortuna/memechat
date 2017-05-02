@@ -16,8 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'type_meme.dart';
 import 'platform_adaptive.dart';
 
-// TODO: Add _name parameter
-//const _name = "Emily";
+const _name = "Emily";
 
 void main() {
   runApp(new MyApp());
@@ -44,25 +43,21 @@ class ChatScreen extends StatefulWidget {
 
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   List<ChatMessage> _messages = <ChatMessage>[];
-  // TODO: Add DatabaseReference
-//  DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
-  // TODO: Add TextEditingController
-//  TextEditingController _textController = new TextEditingController();
+  DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
+  TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
-  // TODO: Add GoogleSignIn
-//  GoogleSignIn _googleSignIn;
+  GoogleSignIn _googleSignIn;
 
   @override
   void initState() {
     super.initState();
-    // TODO: Add GoogleSignIn initialization
-//    GoogleSignIn.initialize(scopes: <String>[]);
-//    GoogleSignIn.instance.then((GoogleSignIn instance) {
-//      setState(() {
-//        _googleSignIn = instance;
-//        _googleSignIn.signInSilently();
-//      });
-//    });
+    GoogleSignIn.initialize(scopes: <String>[]);
+    GoogleSignIn.instance.then((GoogleSignIn instance) {
+      setState(() {
+        _googleSignIn = instance;
+        _googleSignIn.signInSilently();
+      });
+    });
     // TODO: Add FirebaseAuth initialization
 //    FirebaseAuth.instance.signInAnonymously().then((user) {
 //      _messagesReference.onChildAdded.listen((Event event) {
@@ -110,10 +105,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       String imageUrl,
       String textOverlay,
       String senderImageUrl}) {
-    AnimationController animationController = new AnimationController(
-      duration: new Duration(milliseconds: 700),
-      vsync: this,
-    );
+    AnimationController animationController;
+    // TODO: initialize animationController
+//    AnimationController animationController = new AnimationController(
+//      duration: new Duration(milliseconds: 700),
+//      vsync: this,
+//    );
     ChatUser sender = new ChatUser(name: name, imageUrl: senderImageUrl);
     ChatMessage message = new ChatMessage(
         sender: sender,
@@ -121,9 +118,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         imageUrl: imageUrl,
         textOverlay: textOverlay,
         animationController: animationController);
-    setState(() {
-      _messages.insert(0, message);
-    });
+    // TODO: Insert message
+//    setState(() {
+//      _messages.insert(0, message);
+//    });
     animationController.forward();
   }
 
@@ -149,20 +147,19 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Widget _buildTextComposer() {
     return new IconTheme(
         data: new IconThemeData(color: Theme.of(context).accentColor),
-        child: new Container( // TODO: Replace with PlatformAdaptiveContainer
-//        child: new PlatformAdaptiveContainer(
+        child: new PlatformAdaptiveContainer(
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             child: new Row(children: <Widget>[
               new Container(
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  child: new Text("Photos!", style: new TextStyle(fontSize: 30.0)) // TODO: Replace with photo icon button
+                  // TODO: Add photo icon button
 //                child: new IconButton(
 //                  icon: new Icon(Icons.photo),
 //                  onPressed: _handlePhotoButtonPressed,
 //                ),
               ),
-              new Flexible(
-                child: new Text("Input!", style: new TextStyle(fontSize: 30.0)) // TODO: Replace with TextField
+              // TODO: Add TextField
+//              new Flexible(
 //                child: new TextField(
 //                  controller: _textController,
 //                  onSubmitted: _handleSubmitted,
@@ -170,39 +167,36 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 //                  decoration:
 //                      new InputDecoration.collapsed(hintText: "Send a message"),
 //                ),
-              ),
+//              ),
               new Container(
                   margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  child: new Text("Send!", style: new TextStyle(fontSize: 30.0)) // TODO: Replace with PlatformAdaptiveButton
-//                  child: new PlatformAdaptiveButton(
-//                    icon: new Icon(Icons.send),
-//                    onPressed: _isComposing
-//                        ? () => _handleSubmitted(_textController.text)
-//                        : null,
-//                    child: new Text("Send"),
-//                  )
+                  child: new PlatformAdaptiveButton(
+                    icon: new Icon(Icons.send),
+                    onPressed: _isComposing
+                        ? () => _handleSubmitted(_textController.text)
+                        : null,
+                    child: new Text("Send"),
+                  )
               ),
             ])));
   }
 
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar( // TODO: Replace with PlatformAdaptiveAppBar
-          title: new Text("Memechat")
+        appBar: new PlatformAdaptiveAppBar(
+          title: new Text("Memechat"),
+          platform: Theme.of(context).platform,
         ),
-//        appBar: new PlatformAdaptiveAppBar(
-//          title: new Text("Memechat"),
-//          platform: Theme.of(context).platform,
-//        ),
         body: new Column(children: <Widget>[
-          new Flexible(
-              child: new ListView.builder(
-            padding: new EdgeInsets.all(8.0),
-            reverse: true,
-            itemBuilder: (_, int index) =>
-                new ChatMessageListItem(_messages[index]),
-            itemCount: _messages.length,
-          )),
+          // TODO: Add message display
+//          new Flexible(
+//              child: new ListView.builder(
+//            padding: new EdgeInsets.all(8.0),
+//            reverse: true,
+//            itemBuilder: (_, int index) =>
+//                new ChatMessageListItem(_messages[index]),
+//            itemCount: _messages.length,
+//          )),
           new Divider(height: 1.0),
           new Container(
               decoration: new BoxDecoration(
