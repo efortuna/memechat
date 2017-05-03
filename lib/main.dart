@@ -27,10 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Memechat",
-        // TODO: Add platform adaptive theme
-//      theme: defaultTargetPlatform == TargetPlatform.iOS
-//          ? kIOSTheme
-//          : kDefaultTheme,
+      theme: defaultTargetPlatform == TargetPlatform.iOS
+          ? kIOSTheme
+          : kDefaultTheme,
       home: new ChatScreen(),
     );
   }
@@ -85,11 +84,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
   }
 
-  void _handleSubmitted(String text) { // TODO: Fill out this function
-//    _textController.clear();
-//    PRE-PLUGINS
-//    _addMessage(name: _name, text: text);
-//    POST-PLUGINS
+  void _handleSubmitted(String text) {
+    _textController.clear();
+    _addMessage(name: _name, text: text);
+    // TODO: Swap _addMessage with the following lines
 //    _googleSignIn.signIn().then((GoogleSignInAccount user) {
 //      var message = {
 //        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
@@ -105,12 +103,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       String imageUrl,
       String textOverlay,
       String senderImageUrl}) {
-    AnimationController animationController;
-    // TODO: initialize animationController
-//    AnimationController animationController = new AnimationController(
-//      duration: new Duration(milliseconds: 700),
-//      vsync: this,
-//    );
+    AnimationController animationController = new AnimationController(
+      duration: new Duration(milliseconds: 700),
+      vsync: this,
+    );
     ChatUser sender = new ChatUser(name: name, imageUrl: senderImageUrl);
     ChatMessage message = new ChatMessage(
         sender: sender,
@@ -118,10 +114,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         imageUrl: imageUrl,
         textOverlay: textOverlay,
         animationController: animationController);
-    // TODO: Insert message
-//    setState(() {
-//      _messages.insert(0, message);
-//    });
+    setState(() {
+      _messages.insert(0, message);
+    });
     if (animationController != null) {
       animationController.forward();
     }
@@ -160,16 +155,15 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 //                  onPressed: _handlePhotoButtonPressed,
 //                ),
               ),
-              // TODO: Add TextField
-//              new Flexible(
-//                child: new TextField(
-//                  controller: _textController,
-//                  onSubmitted: _handleSubmitted,
-//                  onChanged: _handleMessageChanged,
-//                  decoration:
-//                      new InputDecoration.collapsed(hintText: "Send a message"),
-//                ),
-//              ),
+              new Flexible(
+                child: new TextField(
+                  controller: _textController,
+                  onSubmitted: _handleSubmitted,
+                  onChanged: _handleMessageChanged,
+                  decoration:
+                      new InputDecoration.collapsed(hintText: "Send a message"),
+                ),
+              ),
               new Container(
                   margin: new EdgeInsets.symmetric(horizontal: 4.0),
                   child: new PlatformAdaptiveButton(
@@ -234,12 +228,11 @@ class ChatMessageListItem extends StatelessWidget {
   final ChatMessage message;
 
   Widget build(BuildContext context) {
-    return new Container( // TODO: Add SizeTransition
-//    return new SizeTransition(
-//        sizeFactor: new CurvedAnimation(
-//            parent: message.animationController, curve: Curves.easeOut),
-//        axisAlignment: 0.0,
-//        child: new Container(
+    return new SizeTransition(
+        sizeFactor: new CurvedAnimation(
+            parent: message.animationController, curve: Curves.easeOut),
+        axisAlignment: 0.0,
+        child: new Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0),
           child: new Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +254,7 @@ class ChatMessageListItem extends StatelessWidget {
               ),
             ],
           ),
-//        )
+        )
     );
   }
 }
