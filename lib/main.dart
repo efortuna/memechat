@@ -57,18 +57,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         _googleSignIn.signInSilently();
       });
     });
-    // TODO: Add FirebaseAuth initialization
-//    FirebaseAuth.instance.signInAnonymously().then((user) {
-//      _messagesReference.onChildAdded.listen((Event event) {
-//        var val = event.snapshot.val();
-//        _addMessage(
-//            name: val['sender']['name'],
-//            senderImageUrl: val['sender']['imageUrl'],
-//            text: val['text'],
-//            imageUrl: val['imageUrl'],
-//            textOverlay: val['textOverlay']);
-//      });
-//    });
   }
 
   @override
@@ -87,14 +75,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   void _handleSubmitted(String text) {
     _textController.clear();
     _addMessage(name: _name, text: text);
-    // TODO: Swap _addMessage with the following lines
-//    _googleSignIn.signIn().then((GoogleSignInAccount user) {
-//      var message = {
-//        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
-//        'text': text,
-//      };
-//      _messagesReference.push().set(message);
-//    });
   }
 
   void _addMessage(
@@ -122,23 +102,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     }
   }
 
-  Future<Null> _handlePhotoButtonPressed() async { // TODO: Fill out this function
-//    GoogleSignInAccount account = await _googleSignIn.signIn();
-//    File imageFile = await ImagePicker.pickImage();
-//    int random = new Random().nextInt(10000);
-//    StorageReference ref =
-//        FirebaseStorage.instance.ref().child("image_$random.jpg");
-//    StorageUploadTask uploadTask = ref.put(imageFile);
-//    String overlay =
-//        await Navigator.push(context, new TypeMemeRoute(imageFile));
-//    if (overlay == null) return;
-//    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-//    var message = {
-//      'sender': {'name': account.displayName, 'imageUrl': account.photoUrl},
-//      'imageUrl': downloadUrl.toString(),
-//      'textOverlay': overlay,
-//    };
-//    _messagesReference.push().set(message);
+  Future<Null> _handlePhotoButtonPressed() async {
+
   }
 
   Widget _buildTextComposer() {
@@ -149,11 +114,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             child: new Row(children: <Widget>[
               new Container(
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  // TODO: Add photo icon button
-//                child: new IconButton(
-//                  icon: new Icon(Icons.photo),
-//                  onPressed: _handlePhotoButtonPressed,
-//                ),
               ),
               new Flexible(
                 child: new TextField(
@@ -239,8 +199,7 @@ class ChatMessageListItem extends StatelessWidget {
             children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(), // TODO: Replace with GoogleUserCircleAvatar
-//                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
+                child: new CircleAvatar(),
               ),
               new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
