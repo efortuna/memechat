@@ -27,10 +27,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Memechat",
-        // TODO: Add platform adaptive theme
-//      theme: defaultTargetPlatform == TargetPlatform.iOS
-//          ? kIOSTheme
-//          : kDefaultTheme,
       home: new ChatScreen(),
     );
   }
@@ -58,18 +54,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         _googleSignIn.signInSilently();
       });
     });
-    // TODO: Add FirebaseAuth initialization
-//    FirebaseAuth.instance.signInAnonymously().then((user) {
-//      _messagesReference.onChildAdded.listen((Event event) {
-//        var val = event.snapshot.val();
-//        _addMessage(
-//            name: val['sender']['name'],
-//            senderImageUrl: val['sender']['imageUrl'],
-//            text: val['text'],
-//            imageUrl: val['imageUrl'],
-//            textOverlay: val['textOverlay']);
-//      });
-//    });
   }
 
   @override
@@ -85,18 +69,8 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
   }
 
-  void _handleSubmitted(String text) { // TODO: Fill out this function
-//    _textController.clear();
-//    PRE-PLUGINS
-//    _addMessage(name: _name, text: text);
-//    POST-PLUGINS
-//    _googleSignIn.signIn().then((GoogleSignInAccount user) {
-//      var message = {
-//        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
-//        'text': text,
-//      };
-//      _messagesReference.push().set(message);
-//    });
+  void _handleSubmitted(String text) {
+
   }
 
   void _addMessage(
@@ -106,11 +80,6 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       String textOverlay,
       String senderImageUrl}) {
     AnimationController animationController;
-    // TODO: initialize animationController
-//    AnimationController animationController = new AnimationController(
-//      duration: new Duration(milliseconds: 700),
-//      vsync: this,
-//    );
     ChatUser sender = new ChatUser(name: name, imageUrl: senderImageUrl);
     ChatMessage message = new ChatMessage(
         sender: sender,
@@ -118,32 +87,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         imageUrl: imageUrl,
         textOverlay: textOverlay,
         animationController: animationController);
-    // TODO: Insert message
-//    setState(() {
-//      _messages.insert(0, message);
-//    });
     if (animationController != null) {
       animationController.forward();
     }
   }
 
-  Future<Null> _handlePhotoButtonPressed() async { // TODO: Fill out this function
-//    GoogleSignInAccount account = await _googleSignIn.signIn();
-//    File imageFile = await ImagePicker.pickImage();
-//    int random = new Random().nextInt(10000);
-//    StorageReference ref =
-//        FirebaseStorage.instance.ref().child("image_$random.jpg");
-//    StorageUploadTask uploadTask = ref.put(imageFile);
-//    String overlay =
-//        await Navigator.push(context, new TypeMemeRoute(imageFile));
-//    if (overlay == null) return;
-//    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-//    var message = {
-//      'sender': {'name': account.displayName, 'imageUrl': account.photoUrl},
-//      'imageUrl': downloadUrl.toString(),
-//      'textOverlay': overlay,
-//    };
-//    _messagesReference.push().set(message);
+  Future<Null> _handlePhotoButtonPressed() async {
   }
 
   Widget _buildTextComposer() {
@@ -154,22 +103,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
             child: new Row(children: <Widget>[
               new Container(
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  // TODO: Add photo icon button
-//                child: new IconButton(
-//                  icon: new Icon(Icons.photo),
-//                  onPressed: _handlePhotoButtonPressed,
-//                ),
               ),
-              // TODO: Add TextField
-//              new Flexible(
-//                child: new TextField(
-//                  controller: _textController,
-//                  onSubmitted: _handleSubmitted,
-//                  onChanged: _handleMessageChanged,
-//                  decoration:
-//                      new InputDecoration.collapsed(hintText: "Send a message"),
-//                ),
-//              ),
               new Container(
                   margin: new EdgeInsets.symmetric(horizontal: 4.0),
                   child: new PlatformAdaptiveButton(
@@ -234,20 +168,14 @@ class ChatMessageListItem extends StatelessWidget {
   final ChatMessage message;
 
   Widget build(BuildContext context) {
-    return new Container( // TODO: Add SizeTransition
-//    return new SizeTransition(
-//        sizeFactor: new CurvedAnimation(
-//            parent: message.animationController, curve: Curves.easeOut),
-//        axisAlignment: 0.0,
-//        child: new Container(
+    return new Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0),
           child: new Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               new Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(), // TODO: Replace with GoogleUserCircleAvatar
-//                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
+                child: new CircleAvatar(),
               ),
               new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,7 +189,6 @@ class ChatMessageListItem extends StatelessWidget {
               ),
             ],
           ),
-//        )
     );
   }
 }
