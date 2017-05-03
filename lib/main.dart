@@ -122,7 +122,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 //    setState(() {
 //      _messages.insert(0, message);
 //    });
-    animationController.forward();
+    if (animationController != null) {
+      animationController.forward();
+    }
   }
 
   Future<Null> _handlePhotoButtonPressed() async { // TODO: Fill out this function
@@ -188,15 +190,14 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           platform: Theme.of(context).platform,
         ),
         body: new Column(children: <Widget>[
-          // TODO: Add message display
-//          new Flexible(
-//              child: new ListView.builder(
-//            padding: new EdgeInsets.all(8.0),
-//            reverse: true,
-//            itemBuilder: (_, int index) =>
-//                new ChatMessageListItem(_messages[index]),
-//            itemCount: _messages.length,
-//          )),
+          new Flexible(
+              child: new ListView.builder(
+            padding: new EdgeInsets.all(8.0),
+            reverse: true,
+            itemBuilder: (_, int index) =>
+                new ChatMessageListItem(_messages[index]),
+            itemCount: _messages.length,
+          )),
           new Divider(height: 1.0),
           new Container(
               decoration: new BoxDecoration(
