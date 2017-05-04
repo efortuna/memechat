@@ -87,7 +87,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     _textController.clear();
     _addMessage(name: _name, text: text);
     // TODO: Replace _addMessage with the following code
-//    _googleSignIn.signIn().then((GoogleSignInAccount user) {
+//    _googleSignIn.signIn().then((var user) {
 //      var message = {
 //        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
 //        'text': text,
