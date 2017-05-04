@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(var context) {
     return new MaterialApp(
       title: "Memechat",
-        // TODO: Add platform adaptive theme
+      // TODO: Add platform adaptive theme
 //      theme: defaultTargetPlatform == TargetPlatform.iOS
 //          ? kIOSTheme
 //          : kDefaultTheme,
@@ -74,8 +74,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    for (var message in _messages)
-      message.animationController.dispose();
+    for (var message in _messages) message.animationController.dispose();
     super.dispose();
   }
 
@@ -85,7 +84,8 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     });
   }
 
-  void _handleSubmitted(var text) { // TODO: Fill out this function
+  void _handleSubmitted(var text) {
+    // TODO: Fill out this function
 //    _textController.clear();
 //    PRE-PLUGINS
 //    _addMessage(name: _name, text: text);
@@ -100,11 +100,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   }
 
   void _addMessage(
-      {var name,
-        var text,
-        var imageUrl,
-        var textOverlay,
-        var senderImageUrl}) {
+      {var name, var text, var imageUrl, var textOverlay, var senderImageUrl}) {
     var animationController;
     // TODO: initialize animationController
 //    var animationController = new AnimationController(
@@ -127,7 +123,8 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     }
   }
 
-  Future _handlePhotoButtonPressed() async { // TODO: Fill out this function
+  Future _handlePhotoButtonPressed() async {
+    // TODO: Fill out this function
 //    var account = await _googleSignIn.signIn();
 //    var imageFile = await ImagePicker.pickImage();
 //    var random = new Random().nextInt(10000);
@@ -152,7 +149,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
             child: new Row(children: [
               new Container(
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  // TODO: Add photo icon button
+                // TODO: Add photo icon button
 //                child: new IconButton(
 //                  icon: new Icon(Icons.photo),
 //                  onPressed: _handlePhotoButtonPressed,
@@ -176,8 +173,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
                         ? () => _handleSubmitted(_textController.text)
                         : null,
                     child: new Text("Send"),
-                  )
-              ),
+                  )),
             ])));
   }
 
@@ -201,8 +197,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
               decoration: new BoxDecoration(
                   backgroundColor: Theme.of(context).cardColor),
               child: _buildTextComposer()),
-        ])
-    );
+        ]));
   }
 }
 
@@ -232,33 +227,35 @@ class ChatMessageListItem extends StatelessWidget {
   final message;
 
   Widget build(var context) {
-    return new Container( // TODO: Add SizeTransition
+    return new Container(
+      // TODO: Add SizeTransition
 //    return new SizeTransition(
 //        sizeFactor: new CurvedAnimation(
 //            parent: message.animationController, curve: Curves.easeOut),
 //        axisAlignment: 0.0,
 //        child: new Container(
-          margin: const EdgeInsets.symmetric(vertical: 10.0),
-          child: new Row(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          new Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child:
+                new CircleAvatar(), // TODO: Replace with GoogleUserCircleAvatar
+//                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
+          ),
+          new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              new Text(message.sender.name,
+                  style: Theme.of(context).textTheme.subhead),
               new Container(
-                margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(), // TODO: Replace with GoogleUserCircleAvatar
-//                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
-              ),
-              new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  new Text(message.sender.name,
-                      style: Theme.of(context).textTheme.subhead),
-                  new Container(
-                      margin: const EdgeInsets.only(top: 5.0),
-                      child: new ChatMessageContent(message)),
-                ],
-              ),
+                  margin: const EdgeInsets.only(top: 5.0),
+                  child: new ChatMessageContent(message)),
             ],
           ),
+        ],
+      ),
 //        )
     );
   }
