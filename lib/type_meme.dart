@@ -55,7 +55,7 @@ class TypeMemeDialogState extends State<TypeMemeDialog> {
           new Container(
             margin: new EdgeInsets.symmetric(horizontal: 16.0),
             child: new TextField(
-              decoration: const InputDecoration(hintText: 'Make yo meme'),
+              decoration: const InputDecoration(hintText: 'Meme text'),
               onChanged: (String text) {
                 setState(() {
                   _text = text;
