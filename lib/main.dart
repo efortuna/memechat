@@ -90,7 +90,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
 //    PRE-PLUGINS
 //    _addMessage(name: _name, text: text);
 //    POST-PLUGINS
-//    _googleSignIn.signIn().then((GoogleSignInAccount user) {
+//    _googleSignIn.signIn().then((var user) {
 //      var message = {
 //        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
 //        'text': text,
