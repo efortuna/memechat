@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -44,21 +45,15 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   var _messagesReference = FirebaseDatabase.instance.reference();
   var _textController = new TextEditingController();
   var _isComposing = false;
-  var _googleSignIn;
+  var _googleSignIn = new GoogleSignIn();
 
   @override
   void initState() {
     super.initState();
-    GoogleSignIn.initialize(scopes: []);
-    GoogleSignIn.instance.then((var instance) {
-      setState(() {
-        _googleSignIn = instance;
-        _googleSignIn.signInSilently();
-      });
-    });
+    _googleSignIn.signInSilently();
     FirebaseAuth.instance.signInAnonymously().then((user) {
       _messagesReference.onChildAdded.listen((var event) {
-        var val = event.snapshot.val();
+        var val = event.snapshot.value;
         _addMessage(
             name: val['sender']['name'],
             senderImageUrl: val['sender']['imageUrl'],
@@ -83,7 +78,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
 
   void _handleSubmitted(var text) {
     _textController.clear();
-    _googleSignIn.signIn().then((var user) {
+    _googleSignIn.signIn().then((user) {
       var message = {
         'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
         'text': text,
@@ -182,7 +177,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
           new Divider(height: 1.0),
           new Container(
               decoration: new BoxDecoration(
-                  backgroundColor: Theme.of(context).cardColor),
+                  color: Theme.of(context).cardColor),
               child: _buildTextComposer()),
         ]));
   }
