@@ -5,23 +5,44 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "5F193C9DF05DCAE5004F498C150BE87A7EAB8721" : 9223372036854775807,
+    "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D" : 9223372036854775807,
+    "84A52A43B1F249E51D4A2E1364D2D7EB9CCEAB28" : 9223372036854775807,
     "D433B8E473CE80A529A8760CFA449849DC5ADF4D" : 9223372036854775807,
-    "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D" : 9223372036854775807
+    "2C7909AE2870D01C52C2173047B4671484D709C0" : 9223372036854775807,
+    "93F87B9EDA2726C7A001D001C5A8702DFC0AECDD" : 9223372036854775807
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "0872FB8E-E57A-4B3D-AAEB-29072634F4E1",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "103066F4-906C-4347-82C5-44476058A84E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "5F193C9DF05DCAE5004F498C150BE87A7EAB8721" : "memechat\/",
-    "D433B8E473CE80A529A8760CFA449849DC5ADF4D" : "..\/.pub-cache\/git\/firebase_database-05300967f16a8ff5787f4009775d8c3fb0946f34",
-    "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D" : "flutter\/"
+    "B9BC852104FA5F3F91D8B12EB80D37232CB3B40D" : "flutter\/",
+    "84A52A43B1F249E51D4A2E1364D2D7EB9CCEAB28" : "..\/.pub-cache\/git\/google_sign_in-af4af647730443ee408b4bcbacbcf0e2c0d237a4",
+    "D433B8E473CE80A529A8760CFA449849DC5ADF4D" : "..\/.pub-cache\/git\/firebase_database-2379aebba688cdc9faf33c22652acab0642fa322",
+    "2C7909AE2870D01C52C2173047B4671484D709C0" : "..\/.pub-cache\/git\/firebase_storage-5fdd6b20513b018bf1d3f6f00f57b18c465aeff8",
+    "93F87B9EDA2726C7A001D001C5A8702DFC0AECDD" : "image_picker\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Runner",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios\/Runner.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/jackson\/.pub-cache\/git\/cache\/firebase_storage-4fb0eb21e13ab95e768f8dbba376e48541bc9ef7",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2C7909AE2870D01C52C2173047B4671484D709C0"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:efortuna\/memechat.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5F193C9DF05DCAE5004F498C150BE87A7EAB8721"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "\/Users\/jackson\/.pub-cache\/git\/cache\/google_sign_in-42a2cd914f7d074a0cc22030b2968fb609d329eb",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "84A52A43B1F249E51D4A2E1364D2D7EB9CCEAB28"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:flutter\/image_picker.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "93F87B9EDA2726C7A001D001C5A8702DFC0AECDD"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:flutter\/flutter",
