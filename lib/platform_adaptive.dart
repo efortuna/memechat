@@ -28,7 +28,7 @@ class PlatformAdaptiveAppBar extends AppBar {
   })
       : super(
           key: key,
-          elevation: platform == TargetPlatform.iOS ? 0 : 4,
+          elevation: platform == TargetPlatform.iOS ? 0.0 : 4.0,
           title: title,
           actions: actions,
         );
