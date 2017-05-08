@@ -45,12 +45,14 @@ class TypeMemeDialogState extends State<TypeMemeDialog> {
       ),
       body: new Column(
         children: <Widget>[
-          new Stack(
-            children: [
-              new Image.file(widget.imageFile, width: 250.0),
-              new Text(_text, style: const TextStyle(fontFamily: 'Impact')),
-            ],
-            alignment: FractionalOffset.topCenter,
+          new Flexible(
+            child: new Stack(
+                children: [
+                  new Image.file(widget.imageFile, width: 250.0),
+                  new Text(_text, style: const TextStyle(fontFamily: 'Impact')),
+                ],
+                alignment: FractionalOffset.topCenter,
+            ),
           ),
           new Container(
             margin: new EdgeInsets.symmetric(horizontal: 16.0),
