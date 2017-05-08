@@ -3,11 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(var context) {
     return new MaterialApp(
-      title: "Memechat",
+        title: "Memechat",
       theme: defaultTargetPlatform == TargetPlatform.iOS
           ? kIOSTheme
           : kDefaultTheme,
-      home: new ChatScreen(),
+        home: new ChatScreen(),
     );
   }
 }
@@ -45,22 +45,15 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   var _messagesReference = FirebaseDatabase.instance.reference();
   var _textController = new TextEditingController();
   var _isComposing = false;
-  var _googleSignIn;
+  var _googleSignIn = new GoogleSignIn();
 
   @override
   void initState() {
     super.initState();
-    GoogleSignIn.initialize(scopes: []);
-    GoogleSignIn.instance.then((var instance) {
-      setState(() {
-        _googleSignIn = instance;
-        _googleSignIn.signInSilently();
-      });
-    });
-    // TODO: Add FirebaseAuth initialization
+    _googleSignIn.signInSilently();
 //    FirebaseAuth.instance.signInAnonymously().then((user) {
 //      _messagesReference.onChildAdded.listen((var event) {
-//        var val = event.snapshot.val();
+//        var val = event.snapshot.value;
 //        _addMessage(
 //            name: val['sender']['name'],
 //            senderImageUrl: val['sender']['imageUrl'],
@@ -86,8 +79,8 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   void _handleSubmitted(var text) {
     _textController.clear();
     _addMessage(name: _name, text: text);
-    // TODO: Replace _addMessage with the following code
-//    _googleSignIn.signIn().then((var user) {
+    // TODO: Replace _addMessage with the following function calls
+//    _googleSignIn.signIn().then((user) {
 //      var message = {
 //        'sender': {'name': user.displayName, 'imageUrl': user.photoUrl},
 //        'text': text,
@@ -141,8 +134,8 @@ class ChatScreenState extends State with TickerProviderStateMixin {
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             child: new Row(children: [
               new Container(
-                margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                // TODO: Add photo icon button
+                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
+              // TODO: Add photo icon button
 //                child: new IconButton(
 //                  icon: new Icon(Icons.photo),
 //                  onPressed: _handlePhotoButtonPressed,
@@ -160,11 +153,11 @@ class ChatScreenState extends State with TickerProviderStateMixin {
               new Container(
                   margin: new EdgeInsets.symmetric(horizontal: 4.0),
                   child: new PlatformAdaptiveButton(
-                    icon: new Icon(Icons.send),
-                    onPressed: _isComposing
-                        ? () => _handleSubmitted(_textController.text)
-                        : null,
-                    child: new Text("Send"),
+                      icon: new Icon(Icons.send),
+                      onPressed: _isComposing
+                          ? () => _handleSubmitted(_textController.text)
+                          : null,
+                      child: new Text("Send"),
                   )),
             ])));
   }
@@ -172,22 +165,22 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   Widget build(var context) {
     return new Scaffold(
         appBar: new PlatformAdaptiveAppBar(
-          title: new Text("Memechat"),
-          platform: Theme.of(context).platform,
+            title: new Text("Memechat"),
+            platform: Theme.of(context).platform,
         ),
         body: new Column(children: [
           new Flexible(
               child: new ListView.builder(
-            padding: new EdgeInsets.all(8.0),
-            reverse: true,
-            itemBuilder: (_, var index) =>
-                new ChatMessageListItem(_messages[index]),
-            itemCount: _messages.length,
-          )),
+                  padding: new EdgeInsets.all(8.0),
+                  reverse: true,
+                  itemBuilder: (_, var index) =>
+                  new ChatMessageListItem(_messages[index]),
+                  itemCount: _messages.length,
+              )),
           new Divider(height: 1.0),
           new Container(
               decoration: new BoxDecoration(
-                  backgroundColor: Theme.of(context).cardColor),
+                  color: Theme.of(context).cardColor),
               child: _buildTextComposer()),
         ]));
   }
@@ -202,10 +195,10 @@ class ChatUser {
 class ChatMessage {
   ChatMessage(
       {this.sender,
-      this.text,
-      this.imageUrl,
-      this.textOverlay,
-      this.animationController});
+        this.text,
+        this.imageUrl,
+        this.textOverlay,
+        this.animationController});
   final sender;
   final text;
   final imageUrl;
@@ -224,29 +217,28 @@ class ChatMessageListItem extends StatelessWidget {
             parent: message.animationController, curve: Curves.easeOut),
         axisAlignment: 0.0,
         child: new Container(
-          margin: const EdgeInsets.symmetric(vertical: 10.0),
-          child: new Row(
+        margin: const EdgeInsets.symmetric(vertical: 10.0),
+        child: new Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               new Container(
-                margin: const EdgeInsets.only(right: 16.0),
-                child:
-                    new CircleAvatar(), // TODO: Replace with GoogleUserCircleAvatar
-//                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
+                  margin: const EdgeInsets.only(right: 16.0),
+                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
               ),
               new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  new Text(message.sender.name,
-                      style: Theme.of(context).textTheme.subhead),
-                  new Container(
-                      margin: const EdgeInsets.only(top: 5.0),
-                      child: new ChatMessageContent(message)),
-                ],
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    new Text(message.sender.name,
+                        style: Theme.of(context).textTheme.subhead),
+                    new Container(
+                        margin: const EdgeInsets.only(top: 5.0),
+                        child: new ChatMessageContent(message)),
+                  ],
               ),
             ],
-          ),
-        ));
+        ),
+        )
+    );
   }
 }
 
@@ -262,14 +254,14 @@ class ChatMessageContent extends StatelessWidget {
         return image;
       } else {
         return new Stack(
-          alignment: FractionalOffset.topCenter,
-          children: [
-            image,
-            new Text(
-              message.textOverlay,
-              style: const TextStyle(fontFamily: 'Impact'),
-            ),
-          ],
+            alignment: FractionalOffset.topCenter,
+            children: [
+              image,
+              new Text(
+                  message.textOverlay,
+                  style: const TextStyle(fontFamily: 'Impact'),
+              ),
+            ],
         );
       }
     } else
