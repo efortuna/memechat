@@ -8,6 +8,8 @@ dependencies:
     git: git://github.com/flutter/image_picker
   google_sign_in:
     git: git://github.com/flutter/google_sign_in
+  firebase_auth:
+    git: git://github.com/flutter/firebase_auth
   firebase_database:
     git: git://github.com/flutter/firebase_database
   firebase_storage:
