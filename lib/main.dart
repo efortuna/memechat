@@ -176,8 +176,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
           )),
           new Divider(height: 1.0),
           new Container(
-              decoration: new BoxDecoration(
-                  color: Theme.of(context).cardColor),
+              decoration: new BoxDecoration(color: Theme.of(context).cardColor),
               child: _buildTextComposer()),
         ]));
   }
@@ -253,10 +252,14 @@ class ChatMessageContent extends StatelessWidget {
           alignment: FractionalOffset.topCenter,
           children: [
             image,
-            new Text(
-              message.textOverlay,
-              style: const TextStyle(fontFamily: 'Impact'),
-            ),
+            new Container(
+                alignment: FractionalOffset.topCenter,
+                width: 200.0,
+                child: new Text(message.textOverlay,
+                    style:
+                        const TextStyle(fontFamily: 'Impact', fontSize: 16.0),
+                    softWrap: true,
+                    textAlign: TextAlign.center)),
           ],
         );
       }
