@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(var context) {
     return new MaterialApp(
-        title: 'Memechat',
-        home: new Container(color: Colors.black),
+      title: 'Memechat',
+      home: new Container(color: Colors.black),
     );
   }
 }
@@ -62,9 +62,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     });
   }
 
-  void _handleSubmitted(var text) {
-
-  }
+  void _handleSubmitted(var text) {}
 
   void _addMessage(
       {var name, var text, var imageUrl, var textOverlay, var senderImageUrl}) {
@@ -81,9 +79,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     }
   }
 
-  Future _handlePhotoButtonPressed() async {
-
-  }
+  Future _handlePhotoButtonPressed() async {}
 
   Widget _buildTextComposer() {
     return new IconTheme(
@@ -92,16 +88,16 @@ class ChatScreenState extends State with TickerProviderStateMixin {
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             child: new Row(children: [
               new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
+                margin: new EdgeInsets.symmetric(horizontal: 4.0),
               ),
               new Container(
                   margin: new EdgeInsets.symmetric(horizontal: 4.0),
                   child: new PlatformAdaptiveButton(
-                      icon: new Icon(Icons.send),
-                      onPressed: _isComposing
-                          ? () => _handleSubmitted(_textController.text)
-                          : null,
-                      child: new Text('Send'),
+                    icon: new Icon(Icons.send),
+                    onPressed: _isComposing
+                        ? () => _handleSubmitted(_textController.text)
+                        : null,
+                    child: new Text('Send'),
                   )),
             ])));
   }
@@ -109,22 +105,21 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   Widget build(var context) {
     return new Scaffold(
         appBar: new PlatformAdaptiveAppBar(
-            title: new Text('Memechat'),
-            platform: Theme.of(context).platform,
+          title: new Text('Memechat'),
+          platform: Theme.of(context).platform,
         ),
         body: new Column(children: [
           new Flexible(
               child: new ListView.builder(
-                  padding: new EdgeInsets.all(8.0),
-                  reverse: true,
-                  itemBuilder: (_, var index) =>
-                  new ChatMessageListItem(_messages[index]),
-                  itemCount: _messages.length,
-              )),
+            padding: new EdgeInsets.all(8.0),
+            reverse: true,
+            itemBuilder: (_, var index) =>
+                new ChatMessageListItem(_messages[index]),
+            itemCount: _messages.length,
+          )),
           new Divider(height: 1.0),
           new Container(
-              decoration: new BoxDecoration(
-                  color: Theme.of(context).cardColor),
+              decoration: new BoxDecoration(color: Theme.of(context).cardColor),
               child: _buildTextComposer()),
         ]));
   }
@@ -139,10 +134,10 @@ class ChatUser {
 class ChatMessage {
   ChatMessage(
       {this.sender,
-        this.text,
-        this.imageUrl,
-        this.textOverlay,
-        this.animationController});
+      this.text,
+      this.imageUrl,
+      this.textOverlay,
+      this.animationController});
   final sender;
   final text;
   final imageUrl;
@@ -157,27 +152,28 @@ class ChatMessageListItem extends StatelessWidget {
 
   Widget build(var context) {
     return new Container(
-        margin: const EdgeInsets.symmetric(vertical: 10.0),
-        child: new Row(
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          new Text(message.sender.name,
+              style: Theme.of(context).textTheme.subhead),
+          new Container(
+            margin: const EdgeInsets.only(right: 16.0),
+            child: new CircleAvatar(),
+          ),
+          new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              new Text(message.sender.name,
+                  style: Theme.of(context).textTheme.subhead),
               new Container(
-                  margin: const EdgeInsets.only(right: 16.0),
-                  child:
-                  new CircleAvatar(),
-              ),
-              new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    new Text(message.sender.name,
-                        style: Theme.of(context).textTheme.subhead),
-                    new Container(
-                        margin: const EdgeInsets.only(top: 5.0),
-                        child: new ChatMessageContent(message)),
-                  ],
-              ),
+                  margin: const EdgeInsets.only(top: 5.0),
+                  child: new ChatMessageContent(message)),
             ],
-        ),
+          ),
+        ],
+      ),
 //        )
     );
   }
@@ -195,14 +191,14 @@ class ChatMessageContent extends StatelessWidget {
         return image;
       } else {
         return new Stack(
-            alignment: FractionalOffset.topCenter,
-            children: [
-              image,
-              new Text(
-                  message.textOverlay,
-                  style: const TextStyle(fontFamily: 'Impact'),
-              ),
-            ],
+          alignment: FractionalOffset.topCenter,
+          children: [
+            image,
+            new Text(
+              message.textOverlay,
+              style: const TextStyle(fontFamily: 'Impact'),
+            ),
+          ],
         );
       }
     } else
