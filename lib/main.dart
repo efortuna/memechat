@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(var context) {
     return new MaterialApp(
         title: "Memechat",
-        home: new ChatScreen(),
+        home: new Container(color: Colors.blue),
     );
   }
 }
