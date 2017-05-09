@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "930621591853",
+    "firebase_url": "https://memechat-emshack-efortuna.firebaseio.com",
+    "project_id": "memechat-emshack-efortuna",
+    "storage_bucket": "memechat-emshack-efortuna.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930621591853:android:dd2d837726498b85",
+        "android_client_info": {
+          "package_name": "com.yourcompany.memechat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930621591853-9jgm7ugf8gkeg0gmutvhe6oi1h1ujdlo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yourcompany.memechat",
+            "certificate_hash": "c3adef7e7773e40e777d5c236dbba7461cbea5f0"
+          }
+        },
+        {
+          "client_id": "930621591853-8vk4luti6pi9fdjp2uj267igo9163o8k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK0Tz2sbS925ytmqTRgFx2yZQdm2LMtOA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930621591853-8vk4luti6pi9fdjp2uj267igo9163o8k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "930621591853-f0h905j72hild2e5clg76qdkva276atc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yourcompany.memechat"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

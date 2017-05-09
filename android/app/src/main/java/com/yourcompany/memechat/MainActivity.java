@@ -19,5 +19,6 @@ public class MainActivity extends FlutterActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
       super.onActivityResult(requestCode, resultCode, data);
       pluginRegistry.google_sign_in.onActivityResult(requestCode, resultCode, data);
+      pluginRegistry.image_picker.onActivityResult(requestCode, resultCode, data);
     }
 }
