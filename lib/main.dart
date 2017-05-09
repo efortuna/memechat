@@ -194,10 +194,14 @@ class ChatMessageContent extends StatelessWidget {
           alignment: FractionalOffset.topCenter,
           children: [
             image,
-            new Text(
-              message.textOverlay,
-              style: const TextStyle(fontFamily: 'Impact'),
-            ),
+            new Container(
+                alignment: FractionalOffset.topCenter,
+                width: 200.0,
+                child: new Text(message.textOverlay,
+                    style:
+                        const TextStyle(fontFamily: 'Impact', fontSize: 16.0),
+                    softWrap: true,
+                    textAlign: TextAlign.center)),
           ],
         );
       }
