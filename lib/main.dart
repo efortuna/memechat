@@ -16,7 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'type_meme.dart';
 import 'platform_adaptive.dart';
 
-const _name = "Emily";
+const _name = 'Emily';
 
 void main() {
   runApp(new MyApp());
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(var context) {
     return new MaterialApp(
-      title: "Memechat",
+      title: 'Memechat',
       theme: defaultTargetPlatform == TargetPlatform.iOS
           ? kIOSTheme
           : kDefaultTheme,
@@ -112,7 +112,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     var account = await _googleSignIn.signIn();
     var imageFile = await ImagePicker.pickImage();
     var random = new Random().nextInt(10000);
-    var ref = FirebaseStorage.instance.ref().child("image_$random.jpg");
+    var ref = FirebaseStorage.instance.ref().child('image_$random.jpg');
     var uploadTask = ref.put(imageFile);
     var overlay = await Navigator.push(context, new TypeMemeRoute(imageFile));
     if (overlay == null) return;
@@ -144,7 +144,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
                   onSubmitted: _handleSubmitted,
                   onChanged: _handleMessageChanged,
                   decoration:
-                      new InputDecoration.collapsed(hintText: "Send a message"),
+                      new InputDecoration.collapsed(hintText: 'Send a message'),
                 ),
               ),
               new Container(
@@ -154,7 +154,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
                     onPressed: _isComposing
                         ? () => _handleSubmitted(_textController.text)
                         : null,
-                    child: new Text("Send"),
+                    child: new Text('Send'),
                   )),
             ])));
   }
@@ -162,7 +162,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   Widget build(var context) {
     return new Scaffold(
         appBar: new PlatformAdaptiveAppBar(
-          title: new Text("Memechat"),
+          title: new Text('Memechat'),
           platform: Theme.of(context).platform,
         ),
         body: new Column(children: [
