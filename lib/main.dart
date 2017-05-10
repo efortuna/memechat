@@ -156,8 +156,6 @@ class ChatMessageListItem extends StatelessWidget {
       child: new Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          new Text(message.sender.name,
-              style: Theme.of(context).textTheme.subhead),
           new Container(
             margin: const EdgeInsets.only(right: 16.0),
             child: new CircleAvatar(),
