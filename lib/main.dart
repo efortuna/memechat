@@ -87,9 +87,8 @@ class ChatScreenState extends State with TickerProviderStateMixin {
       _messagesReference.push().set(message);
     });
   }
-
-  Future _addMessage(
-      {var name, var text, var imageUrl, var textOverlay, var senderImageUrl}) async {
+  void _addMessage(
+      {var name, var text, var imageUrl, var textOverlay, var senderImageUrl}) {
     var animationController = new AnimationController(
       duration: new Duration(milliseconds: 700),
       vsync: this,
