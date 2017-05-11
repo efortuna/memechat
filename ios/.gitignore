@@ -12,6 +12,9 @@ build/
 PluginRegistry.h
 PluginRegistry.m
 
+Runner/GeneratedPluginRegistrant.h
+Runner/GeneratedPluginRegistrant.m
+
 *.pbxuser
 *.mode1v3
 *.mode2v3
