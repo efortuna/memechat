@@ -7,6 +7,7 @@
 
 - (BOOL)application:(UIApplication *)application
     didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [GeneratedPluginRegistrant registerWithRegistry:self];
   // Override point for customization after application launch.
   FlutterViewController *flutterController =
       (FlutterViewController *)self.window.rootViewController;
