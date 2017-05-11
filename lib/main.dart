@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -87,8 +88,8 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     });
   }
 
-  void _addMessage(
-      {var name, var text, var imageUrl, var textOverlay, var senderImageUrl}) {
+  Future _addMessage(
+      {var name, var text, var imageUrl, var textOverlay, var senderImageUrl}) async {
     var animationController = new AnimationController(
       duration: new Duration(milliseconds: 700),
       vsync: this,
@@ -103,8 +104,13 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     setState(() {
       _messages.insert(0, message);
     });
-    if (animationController != null) {
-      animationController.forward();
+    if (imageUrl != null) {
+      NetworkImage image = new NetworkImage(imageUrl);
+      image.resolve(createLocalImageConfiguration(context)).addListener((_, __) {
+          animationController?.forward();
+        });
+    } else {
+      animationController?.forward();
     }
   }
 
@@ -114,13 +120,13 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     var random = new Random().nextInt(10000);
     var ref = FirebaseStorage.instance.ref().child('image_$random.jpg');
     var uploadTask = ref.put(imageFile);
-    var overlay = await Navigator.push(context, new TypeMemeRoute(imageFile));
-    if (overlay == null) return;
+    var textOverlay = await Navigator.push(context, new TypeMemeRoute(imageFile));
+    if (textOverlay == null) return;
     var downloadUrl = (await uploadTask.future).downloadUrl;
     var message = {
       'sender': {'name': account.displayName, 'imageUrl': account.photoUrl},
       'imageUrl': downloadUrl.toString(),
-      'textOverlay': overlay,
+      'textOverlay': textOverlay,
     };
     _messagesReference.push().set(message);
   }
