@@ -105,8 +105,15 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     setState(() {
       _messages.insert(0, message);
     });
-    if (animationController != null) {
-      animationController.forward();
+    if (imageUrl != null) {
+      NetworkImage image = new NetworkImage(imageUrl);
+      image
+          .resolve(createLocalImageConfiguration(context))
+          .addListener((_, __) {
+        animationController?.forward();
+      });
+    } else {
+      animationController?.forward();
     }
   }
 
@@ -117,12 +124,12 @@ class ChatScreenState extends State with TickerProviderStateMixin {
 //    var random = new Random().nextInt(10000);
 //    var ref = FirebaseStorage.instance.ref().child('image_$random.jpg');
 //    var uploadTask = ref.put(imageFile);
-//    var overlay = await Navigator.push(context, new TypeMemeRoute(imageFile));
+//    var textOverlay = await Navigator.push(context, new TypeMemeRoute(imageFile));
 //    var downloadUrl = (await uploadTask.future).downloadUrl;
 //    var message = {
 //      'sender': {'name': account.displayName, 'imageUrl': account.photoUrl},
 //      'imageUrl': downloadUrl.toString(),
-//      'textOverlay': overlay,
+//      'textOverlay': textOverlay,
 //    };
 //    _messagesReference.push().set(message);
   }
