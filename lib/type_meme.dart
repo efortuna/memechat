@@ -39,12 +39,12 @@ class TypeMemeDialogState extends State<TypeMemeDialog> {
         platform: Theme.of(context).platform,
         actions: <Widget>[
           new FlatButton(
-            child: new Text(
-                'SEND',
+            child: new Text('SEND',
                 style: new TextStyle(
-                  color: defaultTargetPlatform == TargetPlatform.iOS ? Colors.black : Colors.white,
-                )
-            ),
+                  color: defaultTargetPlatform == TargetPlatform.iOS
+                      ? Colors.black
+                      : Colors.white,
+                )),
             onPressed: () => Navigator.pop(context, _text),
           ),
         ],
