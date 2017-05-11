@@ -86,8 +86,15 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     setState(() {
       _messages.insert(0, message);
     });
-    if (animationController != null) {
-      animationController.forward();
+    if (imageUrl != null) {
+      NetworkImage image = new NetworkImage(imageUrl);
+      image
+          .resolve(createLocalImageConfiguration(context))
+          .addListener((_, __) {
+        animationController?.forward();
+      });
+    } else {
+      animationController?.forward();
     }
   }
 
