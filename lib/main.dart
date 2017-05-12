@@ -196,7 +196,7 @@ class ChatMessageListItem extends StatelessWidget {
             children: [
               new Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: new GoogleUserCircleAvatar(message.sender.imageUrl),
+                child: new CircleAvatar(),
               ),
               new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
