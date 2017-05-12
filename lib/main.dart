@@ -87,8 +87,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
   }
 
-  void _addMessage({String name, String text, String imageUrl,
-    String textOverlay, String senderImageUrl}) {
+  void _addMessage(
+      {String name,
+      String text,
+      String imageUrl,
+      String textOverlay,
+      String senderImageUrl}) {
     var animationController = new AnimationController(
       duration: new Duration(milliseconds: 700),
       vsync: this,
@@ -122,7 +126,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     var ref = FirebaseStorage.instance.ref().child('image_$random.jpg');
     var uploadTask = ref.put(imageFile);
     var textOverlay =
-    await Navigator.push(context, new TypeMemeRoute(imageFile));
+        await Navigator.push(context, new TypeMemeRoute(imageFile));
     var downloadUrl = (await uploadTask.future).downloadUrl;
     var message = {
       'sender': {'name': account.displayName, 'imageUrl': account.photoUrl},
@@ -151,7 +155,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                   onSubmitted: _handleSubmitted,
                   onChanged: _handleMessageChanged,
                   decoration:
-                  new InputDecoration.collapsed(hintText: 'Send a message'),
+                      new InputDecoration.collapsed(hintText: 'Send a message'),
                 ),
               ),
               new Container(
@@ -175,12 +179,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         body: new Column(children: [
           new Flexible(
               child: new ListView.builder(
-                padding: new EdgeInsets.all(8.0),
-                reverse: true,
-                itemBuilder: (_, int index) =>
+            padding: new EdgeInsets.all(8.0),
+            reverse: true,
+            itemBuilder: (_, int index) =>
                 new ChatMessageListItem(_messages[index]),
-                itemCount: _messages.length,
-              )),
+            itemCount: _messages.length,
+          )),
           new Divider(height: 1.0),
           new Container(
               decoration: new BoxDecoration(color: Theme.of(context).cardColor),
@@ -198,10 +202,10 @@ class ChatUser {
 class ChatMessage {
   ChatMessage(
       {this.sender,
-        this.text,
-        this.imageUrl,
-        this.textOverlay,
-        this.animationController});
+      this.text,
+      this.imageUrl,
+      this.textOverlay,
+      this.animationController});
   final ChatUser sender;
   final String text;
   final String imageUrl;
@@ -264,7 +268,7 @@ class ChatMessageContent extends StatelessWidget {
                 width: 200.0,
                 child: new Text(message.textOverlay,
                     style:
-                    const TextStyle(fontFamily: 'Impact', fontSize: 16.0),
+                        const TextStyle(fontFamily: 'Impact', fontSize: 16.0),
                     softWrap: true,
                     textAlign: TextAlign.center)),
           ],
