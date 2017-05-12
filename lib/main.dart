@@ -92,7 +92,11 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   void _addMessage(
-      {String name, String text, String imageUrl, String textOverlay, String senderImageUrl}) {
+      {String name,
+      String text,
+      String imageUrl,
+      String textOverlay,
+      String senderImageUrl}) {
     var animationController = new AnimationController(
       duration: new Duration(milliseconds: 700),
       vsync: this,
