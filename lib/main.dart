@@ -65,7 +65,11 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   void _handleSubmitted(var text) {}
 
   void _addMessage(
-      {String name, String text, String imageUrl, String textOverlay, String senderImageUrl}) {
+      {String name,
+      String text,
+      String imageUrl,
+      String textOverlay,
+      String senderImageUrl}) {
     var animationController;
     var sender = new ChatUser(name: name, imageUrl: senderImageUrl);
     var message = new ChatMessage(
