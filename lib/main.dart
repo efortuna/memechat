@@ -62,7 +62,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
   }
 
-  void _handleSubmitted(var text) {}
+  void _handleSubmitted(String text) {}
 
   void _addMessage(
       {String name,
