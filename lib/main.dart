@@ -16,6 +16,8 @@ import 'package:image_picker/image_picker.dart';
 import 'type_meme.dart';
 import 'platform_adaptive.dart';
 
+const _name = 'Emily';
+
 void main() {
   runApp(new MyApp());
 }
