@@ -16,15 +16,13 @@ import 'package:image_picker/image_picker.dart';
 import 'type_meme.dart';
 import 'platform_adaptive.dart';
 
-const _name = 'Emily';
-
 void main() {
   runApp(new MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(var context) {
+  Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Memechat',
       home: new Container(color: Colors.black),
@@ -38,11 +36,11 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State with TickerProviderStateMixin {
-  var _messages = [];
-  var _messagesReference = FirebaseDatabase.instance.reference();
-  var _textController = new TextEditingController();
-  var _isComposing = false;
-  var _googleSignIn = new GoogleSignIn();
+  List<ChatMessage> _messages = [];
+  DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
+  TextEditingController _textController = new TextEditingController();
+  bool _isComposing = false;
+  GoogleSignIn _googleSignIn = new GoogleSignIn();
 
   @override
   void initState() {
@@ -52,11 +50,13 @@ class ChatScreenState extends State with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    for (var message in _messages) message.animationController.dispose();
+    for (ChatMessage message in _messages) {
+      message.animationController.dispose();
+    }
     super.dispose();
   }
 
-  void _handleMessageChanged(var text) {
+  void _handleMessageChanged(String text) {
     setState(() {
       _isComposing = text.length > 0;
     });
@@ -65,7 +65,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
   void _handleSubmitted(var text) {}
 
   void _addMessage(
-      {var name, var text, var imageUrl, var textOverlay, var senderImageUrl}) {
+      {String name, String text, String imageUrl, String textOverlay, String senderImageUrl}) {
     var animationController;
     var sender = new ChatUser(name: name, imageUrl: senderImageUrl);
     var message = new ChatMessage(
@@ -86,7 +86,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
     }
   }
 
-  Future _handlePhotoButtonPressed() async {}
+  Future<Null> _handlePhotoButtonPressed() async {}
 
   Widget _buildTextComposer() {
     return new IconTheme(
@@ -109,7 +109,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
             ])));
   }
 
-  Widget build(var context) {
+  Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new PlatformAdaptiveAppBar(
           title: new Text('Memechat'),
@@ -120,7 +120,7 @@ class ChatScreenState extends State with TickerProviderStateMixin {
               child: new ListView.builder(
             padding: new EdgeInsets.all(8.0),
             reverse: true,
-            itemBuilder: (_, var index) =>
+            itemBuilder: (_, int index) =>
                 new ChatMessageListItem(_messages[index]),
             itemCount: _messages.length,
           )),
@@ -134,8 +134,8 @@ class ChatScreenState extends State with TickerProviderStateMixin {
 
 class ChatUser {
   ChatUser({this.name, this.imageUrl});
-  final name;
-  final imageUrl;
+  final String name;
+  final String imageUrl;
 }
 
 class ChatMessage {
@@ -145,19 +145,19 @@ class ChatMessage {
       this.imageUrl,
       this.textOverlay,
       this.animationController});
-  final sender;
-  final text;
-  final imageUrl;
-  final textOverlay;
-  final animationController;
+  final ChatUser sender;
+  final String text;
+  final String imageUrl;
+  final String textOverlay;
+  final AnimationController animationController;
 }
 
 class ChatMessageListItem extends StatelessWidget {
   ChatMessageListItem(this.message);
 
-  final message;
+  final ChatMessage message;
 
-  Widget build(var context) {
+  Widget build(BuildContext context) {
     return new Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       child: new Row(
@@ -187,9 +187,9 @@ class ChatMessageListItem extends StatelessWidget {
 class ChatMessageContent extends StatelessWidget {
   ChatMessageContent(this.message);
 
-  final message;
+  final ChatMessage message;
 
-  Widget build(var context) {
+  Widget build(BuildContext context) {
     if (message.imageUrl != null) {
       var image = new Image.network(message.imageUrl, width: 200.0);
       if (message.textOverlay == null) {
