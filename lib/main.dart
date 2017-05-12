@@ -35,7 +35,7 @@ class ChatScreen extends StatefulWidget {
   State createState() => new ChatScreenState();
 }
 
-class ChatScreenState extends State with TickerProviderStateMixin {
+class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   List<ChatMessage> _messages = [];
   DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
   TextEditingController _textController = new TextEditingController();
