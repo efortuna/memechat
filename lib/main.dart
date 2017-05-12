@@ -76,7 +76,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
   }
 
-  void _handleSubmitted(var text) {
+  void _handleSubmitted(String text) {
     _textController.clear();
     _googleSignIn.signIn().then((user) {
       var message = {
