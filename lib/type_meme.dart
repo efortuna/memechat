@@ -60,7 +60,7 @@ class TypeMemeDialogState extends State<TypeMemeDialog> {
                     alignment: FractionalOffset.topCenter,
                     child: new Text(_text,
                         style: const TextStyle(
-                            fontFamily: 'Impact', fontSize: 20.0),
+                            fontFamily: 'Anton', fontSize: 20.0),
                         softWrap: true,
                         textAlign: TextAlign.center)),
               ],
