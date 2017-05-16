@@ -274,7 +274,7 @@ class ChatMessageContent extends StatelessWidget {
                 width: 200.0,
                 child: new Text(message.textOverlay,
                     style:
-                        const TextStyle(fontFamily: 'Impact', fontSize: 16.0),
+                        const TextStyle(fontFamily: 'Anton', fontSize: 16.0),
                     softWrap: true,
                     textAlign: TextAlign.center)),
           ],
