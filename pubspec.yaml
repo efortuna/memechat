@@ -22,9 +22,9 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: Impact
+    - family: Anton
       fonts:
-        - asset: assets/fonts/Impact.ttf
+        - asset: assets/fonts/Anton-Regular.ttf
   # To add assets to your application, add an assets section here, in
   # this "flutter" section, as in:
   # assets:
