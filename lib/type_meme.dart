@@ -12,10 +12,10 @@ import 'platform_adaptive.dart';
 class TypeMemeRoute extends MaterialPageRoute<String> {
   TypeMemeRoute(File imageFile)
       : super(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return new TypeMemeDialog(imageFile: imageFile);
-            });
+      fullscreenDialog: true,
+      builder: (BuildContext context) {
+        return new TypeMemeDialog(imageFile: imageFile);
+      });
 }
 
 class TypeMemeDialog extends StatefulWidget {
@@ -34,52 +34,57 @@ class TypeMemeDialogState extends State<TypeMemeDialog> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new PlatformAdaptiveAppBar(
-        title: new Text("New meme"),
-        platform: Theme.of(context).platform,
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('SEND',
-                style: new TextStyle(
-                  color: defaultTargetPlatform == TargetPlatform.iOS
-                      ? Colors.black
-                      : Colors.white,
-                )),
-            onPressed: () => Navigator.pop(context, _text),
-          ),
-        ],
-      ),
-      body: new Column(
-        children: <Widget>[
-          new Flexible(
-            child: new Stack(
-              children: [
-                new Image.file(widget.imageFile, width: 250.0),
-                new Container(
-                    width: 250.0,
-                    alignment: FractionalOffset.topCenter,
-                    child: new Text(_text,
-                        style: const TextStyle(
-                            fontFamily: 'Anton', fontSize: 20.0),
-                        softWrap: true,
-                        textAlign: TextAlign.center)),
-              ],
-              alignment: FractionalOffset.topCenter,
-            ),
-          ),
-          new Container(
-            margin: new EdgeInsets.symmetric(horizontal: 16.0),
-            child: new TextField(
-              decoration: const InputDecoration(hintText: 'Meme text'),
-              onChanged: (String text) {
-                setState(() {
-                  _text = text;
-                });
-              },
-            ),
-          ),
-        ],
-      ),
+        appBar: new PlatformAdaptiveAppBar(
+            title: new Text("New meme"),
+            platform: Theme.of(context).platform,
+            actions: <Widget>[
+              new FlatButton(
+                  child: new Text('SEND',
+                      style: new TextStyle(
+                          color: defaultTargetPlatform == TargetPlatform.iOS
+                              ? Colors.black
+                              : Colors.white,
+                      )),
+                  onPressed: () => Navigator.pop(context, _text),
+              ),
+            ],
+        ),
+        body: new Column(
+            children: <Widget>[
+              new Flexible(
+                  child: new SingleChildScrollView(
+                      child: new Stack(
+                          children: [
+                            new Image.file(widget.imageFile, width: 250.0),
+                            new Positioned.fill(
+                                child: new Container(
+                                    alignment: FractionalOffset.topCenter,
+                                    child: new Text(_text,
+                                        style: const TextStyle(
+                                            fontFamily: 'Anton',
+                                            fontSize: 37.5,
+                                            color: Colors.white),
+                                        softWrap: true,
+                                        textAlign: TextAlign.center)),
+                            ),
+                          ],
+                          alignment: FractionalOffset.topCenter,
+                      ),
+                  ),
+              ),
+              new Container(
+                  margin: new EdgeInsets.symmetric(horizontal: 16.0),
+                  child: new TextField(
+                      decoration: const InputDecoration(hintText: 'Meme text'),
+                      onChanged: (String text) {
+                        setState(() {
+                          _text = text;
+                        });
+                      },
+                  ),
+              ),
+            ],
+        ),
     );
   }
 }
