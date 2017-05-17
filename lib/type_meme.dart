@@ -52,19 +52,24 @@ class TypeMemeDialogState extends State<TypeMemeDialog> {
       body: new Column(
         children: <Widget>[
           new Flexible(
-            child: new Stack(
-              children: [
-                new Image.file(widget.imageFile, width: 250.0),
-                new Container(
-                    width: 250.0,
-                    alignment: FractionalOffset.topCenter,
-                    child: new Text(_text,
-                        style: const TextStyle(
-                            fontFamily: 'Anton', fontSize: 20.0),
-                        softWrap: true,
-                        textAlign: TextAlign.center)),
-              ],
-              alignment: FractionalOffset.topCenter,
+            child: new SingleChildScrollView(
+              child: new Stack(
+                children: [
+                  new Image.file(widget.imageFile, width: 250.0),
+                  new Positioned.fill(
+                    child: new Container(
+                        alignment: FractionalOffset.topCenter,
+                        child: new Text(_text,
+                            style: const TextStyle(
+                                fontFamily: 'Anton',
+                                fontSize: 37.5,
+                                color: Colors.white),
+                            softWrap: true,
+                            textAlign: TextAlign.center)),
+                  ),
+                ],
+                alignment: FractionalOffset.topCenter,
+              ),
             ),
           ),
           new Container(

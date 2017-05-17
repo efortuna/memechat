@@ -268,8 +268,10 @@ class ChatMessageContent extends StatelessWidget {
                 alignment: FractionalOffset.topCenter,
                 width: 200.0,
                 child: new Text(message.textOverlay,
-                    style:
-                        const TextStyle(fontFamily: 'Anton', fontSize: 16.0),
+                    style: const TextStyle(
+                        fontFamily: 'Anton',
+                        fontSize: 30.0,
+                        color: Colors.white),
                     softWrap: true,
                     textAlign: TextAlign.center)),
           ],
