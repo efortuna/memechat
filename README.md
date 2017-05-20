@@ -6,7 +6,12 @@ MemeChat contains platform-specific elements for Android and iOS.
 # Usage
 1. Follow the installation instructions on www.flutter.io to install Flutter.
 2. You'll need to create a Firebase instance. Follow the instructions at https://console.firebase.google.com.
-3. (skip if not running on Android) 
+3. Once your Firebase instance is created, you'll need to enable anonymous authentication.
+  - Go to the Firebase Console for your new instance.
+  - Click "Authentication" in the left-hand menu
+  - Click the "sign-in method" tab
+  - Click "anonymous" and enable it
+4. (skip if not running on Android) 
 - Create an app within your Firebase instance for Android, with package name com.yourcompany.memechat 
 - Follow instructions to download google-services.json, and place it into memechat/android/app/
 - Run the following command to get your SHA-1 key:
