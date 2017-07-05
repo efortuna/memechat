@@ -5,8 +5,8 @@ dependencies:
   flutter:
     sdk: flutter
   image_picker: ^0.0.1
-  google_sign_in: ^0.0.1
-  firebase_auth: ^0.0.1
+  google_sign_in: ^0.2.1
+  firebase_auth: ^0.1.0
   firebase_database: ^0.0.4
   firebase_storage: ^0.0.1
 
