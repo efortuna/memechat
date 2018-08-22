@@ -124,10 +124,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   Future<Null> _handlePhotoButtonPressed() async {
     var account = await _googleSignIn.signIn();
-    var imageFile = await ImagePicker.pickImage();
+    var imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
     var random = Random().nextInt(10000);
     var ref = FirebaseStorage.instance.ref().child('image_$random.jpg');
-    var uploadTask = ref.put(imageFile);
+    var uploadTask = ref.putFile(imageFile);
     var textOverlay =
         await Navigator.push(context, TypeMemeRoute(imageFile));
     if (textOverlay == null) return;
