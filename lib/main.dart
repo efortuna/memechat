@@ -23,27 +23,27 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return MaterialApp(
       title: 'Memechat',
       theme: defaultTargetPlatform == TargetPlatform.iOS
           ? kIOSTheme
           : kDefaultTheme,
-      home: new ChatScreen(),
+      home: ChatScreen(),
     );
   }
 }
 
 class ChatScreen extends StatefulWidget {
   @override
-  State createState() => new ChatScreenState();
+  State createState() => ChatScreenState();
 }
 
 class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   List<ChatMessage> _messages = [];
   DatabaseReference _messagesReference = FirebaseDatabase.instance.reference();
-  TextEditingController _textController = new TextEditingController();
+  TextEditingController _textController = TextEditingController();
   bool _isComposing = false;
-  GoogleSignIn _googleSignIn = new GoogleSignIn();
+  GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   void initState() {
@@ -93,12 +93,12 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       String imageUrl,
       String textOverlay,
       String senderImageUrl}) {
-    var animationController = new AnimationController(
-      duration: new Duration(milliseconds: 700),
+    var animationController = AnimationController(
+      duration: Duration(milliseconds: 700),
       vsync: this,
     );
-    var sender = new ChatUser(name: name, imageUrl: senderImageUrl);
-    var message = new ChatMessage(
+    var sender = ChatUser(name: name, imageUrl: senderImageUrl);
+    var message = ChatMessage(
         sender: sender,
         text: text,
         imageUrl: imageUrl,
@@ -108,7 +108,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       _messages.insert(0, message);
     });
     if (imageUrl != null) {
-      NetworkImage image = new NetworkImage(imageUrl);
+      NetworkImage image = NetworkImage(imageUrl);
       image
           .resolve(createLocalImageConfiguration(context))
           .addListener((_, __) {
@@ -122,11 +122,11 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Future<Null> _handlePhotoButtonPressed() async {
     var account = await _googleSignIn.signIn();
     var imageFile = await ImagePicker.pickImage();
-    var random = new Random().nextInt(10000);
+    var random = Random().nextInt(10000);
     var ref = FirebaseStorage.instance.ref().child('image_$random.jpg');
     var uploadTask = ref.put(imageFile);
     var textOverlay =
-        await Navigator.push(context, new TypeMemeRoute(imageFile));
+        await Navigator.push(context, TypeMemeRoute(imageFile));
     if (textOverlay == null) return;
     var downloadUrl = (await uploadTask.future).downloadUrl;
     var message = {
@@ -138,57 +138,57 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildTextComposer() {
-    return new IconTheme(
-        data: new IconThemeData(color: Theme.of(context).accentColor),
-        child: new PlatformAdaptiveContainer(
+    return IconTheme(
+        data: IconThemeData(color: Theme.of(context).accentColor),
+        child: PlatformAdaptiveContainer(
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: new Row(children: [
-              new Container(
-                margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                child: new IconButton(
-                  icon: new Icon(Icons.photo),
+            child: Row(children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 4.0),
+                child: IconButton(
+                  icon: Icon(Icons.photo),
                   onPressed: _handlePhotoButtonPressed,
                 ),
               ),
-              new Flexible(
-                child: new TextField(
+              Flexible(
+                child: TextField(
                   controller: _textController,
                   onSubmitted: _handleSubmitted,
                   onChanged: _handleMessageChanged,
                   decoration:
-                      new InputDecoration.collapsed(hintText: 'Send a message'),
+                      InputDecoration.collapsed(hintText: 'Send a message'),
                 ),
               ),
-              new Container(
-                  margin: new EdgeInsets.symmetric(horizontal: 4.0),
-                  child: new PlatformAdaptiveButton(
-                    icon: new Icon(Icons.send),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 4.0),
+                  child: PlatformAdaptiveButton(
+                    icon: Icon(Icons.send),
                     onPressed: _isComposing
                         ? () => _handleSubmitted(_textController.text)
                         : null,
-                    child: new Text('Send'),
+                    child: Text('Send'),
                   )),
             ])));
   }
 
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: new PlatformAdaptiveAppBar(
-          title: new Text('Memechat'),
+    return Scaffold(
+        appBar: PlatformAdaptiveAppBar(
+          title: Text('Memechat'),
           platform: Theme.of(context).platform,
         ),
-        body: new Column(children: [
-          new Flexible(
-              child: new ListView.builder(
-            padding: new EdgeInsets.all(8.0),
+        body: Column(children: [
+          Flexible(
+              child: ListView.builder(
+            padding: EdgeInsets.all(8.0),
             reverse: true,
             itemBuilder: (_, int index) =>
-                new ChatMessageListItem(_messages[index]),
+                ChatMessageListItem(_messages[index]),
             itemCount: _messages.length,
           )),
-          new Divider(height: 1.0),
-          new Container(
-              decoration: new BoxDecoration(color: Theme.of(context).cardColor),
+          Divider(height: 1.0),
+          Container(
+              decoration: BoxDecoration(color: Theme.of(context).cardColor),
               child: _buildTextComposer()),
         ]));
   }
@@ -220,27 +220,27 @@ class ChatMessageListItem extends StatelessWidget {
   final ChatMessage message;
 
   Widget build(BuildContext context) {
-    return new SizeTransition(
-        sizeFactor: new CurvedAnimation(
+    return SizeTransition(
+        sizeFactor: CurvedAnimation(
             parent: message.animationController, curve: Curves.easeOut),
         axisAlignment: 0.0,
-        child: new Container(
+        child: Container(
           margin: const EdgeInsets.symmetric(vertical: 10.0),
-          child: new Row(
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              new Container(
+              Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(backgroundImage: new NetworkImage(message.sender.imageUrl)),
+                child: CircleAvatar(backgroundImage: NetworkImage(message.sender.imageUrl)),
               ),
-              new Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  new Text(message.sender.name,
+                  Text(message.sender.name,
                       style: Theme.of(context).textTheme.subhead),
-                  new Container(
+                  Container(
                       margin: const EdgeInsets.only(top: 5.0),
-                      child: new ChatMessageContent(message)),
+                      child: ChatMessageContent(message)),
                 ],
               ),
             ],
@@ -256,18 +256,18 @@ class ChatMessageContent extends StatelessWidget {
 
   Widget build(BuildContext context) {
     if (message.imageUrl != null) {
-      var image = new Image.network(message.imageUrl, width: 200.0);
+      var image = Image.network(message.imageUrl, width: 200.0);
       if (message.textOverlay == null) {
         return image;
       } else {
-        return new Stack(
+        return Stack(
           alignment: FractionalOffset.topCenter,
           children: [
             image,
-            new Container(
+            Container(
                 alignment: FractionalOffset.topCenter,
                 width: 200.0,
-                child: new Text(message.textOverlay,
+                child: Text(message.textOverlay,
                     style: const TextStyle(
                         fontFamily: 'Anton',
                         fontSize: 30.0,
@@ -278,6 +278,6 @@ class ChatMessageContent extends StatelessWidget {
         );
       }
     } else
-      return new Text(message.text);
+      return Text(message.text);
   }
 }
