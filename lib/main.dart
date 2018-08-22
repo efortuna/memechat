@@ -85,6 +85,9 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       };
       _messagesReference.push().set(message);
     });
+    setState(() {
+      _isComposing = false;
+    });
   }
 
   void _addMessage(
