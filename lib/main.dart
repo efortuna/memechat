@@ -44,13 +44,15 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   TextEditingController _textController = TextEditingController();
   bool _isComposing = false;
   GoogleSignIn _googleSignIn = GoogleSignIn();
+  var fireBaseSubscription;
 
   @override
   void initState() {
     super.initState();
     _googleSignIn.signInSilently();
     FirebaseAuth.instance.signInAnonymously().then((user) {
-      _messagesReference.onChildAdded.listen((Event event) {
+      fireBaseSubscription =
+          _messagesReference.onChildAdded.listen((Event event) {
         var val = event.snapshot.value;
         _addMessage(
             name: val['sender']['name'],
@@ -67,6 +69,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     for (ChatMessage message in _messages) {
       message.animationController.dispose();
     }
+    fireBaseSubscription.cancel();
     super.dispose();
   }
 
@@ -128,8 +131,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     var random = Random().nextInt(10000);
     var ref = FirebaseStorage.instance.ref().child('image_$random.jpg');
     var uploadTask = ref.putFile(imageFile);
-    var textOverlay =
-        await Navigator.push(context, TypeMemeRoute(imageFile));
+    var textOverlay = await Navigator.push(context, TypeMemeRoute(imageFile));
     if (textOverlay == null) return;
     var downloadUrl = (await uploadTask.future).downloadUrl;
     var message = {
@@ -234,7 +236,8 @@ class ChatMessageListItem extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 16.0),
-                child: CircleAvatar(backgroundImage: NetworkImage(message.sender.imageUrl)),
+                child: CircleAvatar(
+                    backgroundImage: NetworkImage(message.sender.imageUrl)),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
