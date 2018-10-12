@@ -3,8 +3,6 @@
     android:versionCode="1"
     android:versionName="0.0.1">
 
-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="21" />
-
     <!-- The INTERNET permission is required for development. Specifically,
          flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
@@ -16,7 +14,10 @@
          In most cases you can leave this as-is, but you if you want to provide
          additional functionality it is fine to subclass or reimplement
          FlutterApplication and put your custom class here. -->
-    <application android:name="io.flutter.app.FlutterApplication" android:label="memechat" android:icon="@mipmap/ic_launcher">
+    <application
+        android:name="io.flutter.app.FlutterApplication"
+        android:label="memechat"
+        android:icon="@mipmap/ic_launcher">
         <activity android:name=".MainActivity"
                   android:launchMode="singleTop"
                   android:theme="@android:style/Theme.Black.NoTitleBar"
