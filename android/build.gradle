@@ -15,6 +15,9 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        }
+        configurations.all {
+        resolutionStrategy.force "com.android.support:support-v4:26.1.0"
     }
 }
 
