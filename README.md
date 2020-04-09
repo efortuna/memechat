@@ -12,7 +12,11 @@ MemeChat contains platform-specific elements for Android and iOS.
     - Click the "sign-in method" tab
     - Click "anonymous" and enable it
     - Click "Google" and enable it
-4. Next, click "Database" in the left-hand menu.  Create a real-time database and start in test mode. Click "Enable".
+4. Next, click "Database" in the left-hand menu.  Create a real-time database. Click "Enable".
+   > Note: The default database is `Cloud Firestore` which is not the one you want. You need to setup the `Realtime Database` from the dropdown.  
+![RealtimeDatabase setting is hidden](https://user-images.githubusercontent.com/36284839/78911054-c6899100-7a53-11ea-92aa-2e1e25361131.png "RealtimeDatabase setting is hidden")
+
+   > Go to the rules and modify them intelligently. For testing, you can change both read and write to `true`, but [don't leave these lax settings on forever](https://firebase.google.com/docs/database/security).
 5. Finally, click "Storage" in the left-hand menu.  Enable it.
 
 ## Android Setup
@@ -23,6 +27,8 @@ MemeChat contains platform-specific elements for Android and iOS.
 keytool -exportcert -list -v \
 -alias androiddebugkey -keystore ~/.android/debug.keystore
 ```
+OR
+```keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android```
 4. In the Firebase console, in the settings of your Android app, add your SHA-1 key by clicking "Add Fingerprint".
 
 ## iOS Setup
