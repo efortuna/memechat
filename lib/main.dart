@@ -115,11 +115,18 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
     if (imageUrl != null) {
       NetworkImage image = NetworkImage(imageUrl);
-      image
-          .resolve(createLocalImageConfiguration(context))
-          .addListener((_, __) {
+      ImageStreamListener isl = ImageStreamListener((_, __) {
         animationController?.forward();
       });
+      image
+          .resolve(createLocalImageConfiguration(context))
+          .addListener(isl);
+// OLD CODE WITH typeCheck error "Null(dynamic, dynamic)      
+//       image
+//           .resolve(createLocalImageConfiguration(context))
+//           .addListener((_, __) {
+//         animationController?.forward();
+//       });
     } else {
       animationController?.forward();
     }
