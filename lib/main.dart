@@ -117,9 +117,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       NetworkImage image = NetworkImage(imageUrl);
       image
           .resolve(createLocalImageConfiguration(context))
-          .addListener((_, __) {
+          .addListener(
+          ImageStreamListener((ImageInfo image, bool synchronousCall) {
         animationController?.forward();
-      });
+      }));
     } else {
       animationController?.forward();
     }
